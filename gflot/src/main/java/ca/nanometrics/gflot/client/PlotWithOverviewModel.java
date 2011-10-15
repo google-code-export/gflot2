@@ -70,11 +70,11 @@ public class PlotWithOverviewModel extends PlotModel {
 		return m_overviewModel.getSeries();
 	}
 
-	public void setSelection(double x1, double x2) {
+	void setSelection(double x1, double x2) {
 		setSelection(x1, x2, null);
 	}
 
-	public void setSelection(double x1, double x2, Command toExcuteAfterSelection) {
+	void setSelection(double x1, double x2, Command toExcuteAfterSelection) {
 		m_selection[0] = x1;
 		m_selection[1] = x2;
 		m_windowModel.clear();
