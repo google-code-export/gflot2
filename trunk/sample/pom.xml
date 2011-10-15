@@ -13,7 +13,17 @@
     <maven.compiler.source>1.6</maven.compiler.source>
     <maven.compiler.target>1.6</maven.compiler.target>
     <gwt.version>2.4.0</gwt.version>
+    <gae.version>1.5.5</gae.version>
+    <gae.home>${user.home}/.m2/repository/com/google/appengine/appengine-java-sdk/${gae.version}/appengine-java-sdk-${gae.version}</gae.home>
+    <gae.application.version>1</gae.application.version>
   </properties>
+
+  <repositories>
+    <repository>
+      <id>gflot</id>
+      <url>https://gflot2.googlecode.com/svn/repo/releases</url>
+    </repository>
+  </repositories>
 
   <dependencies>
     <dependency>
@@ -28,6 +38,30 @@
       <artifactId>gflot</artifactId>
       <version>2.0</version>
       <scope>provided</scope>
+    </dependency>
+
+    <!-- AppEngine -->
+    <dependency>
+      <groupId>com.google.appengine</groupId>
+      <artifactId>appengine-api-1.0-sdk</artifactId>
+      <version>${gae.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.google.appengine</groupId>
+      <artifactId>appengine-testing</artifactId>
+      <version>${gae.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.google.appengine</groupId>
+      <artifactId>appengine-api-stubs</artifactId>
+      <version>${gae.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.google.appengine</groupId>
+      <artifactId>appengine-api-labs</artifactId>
+      <version>${gae.version}</version>
     </dependency>
   </dependencies>
 
@@ -81,6 +115,9 @@
         <configuration>
           <runTarget>GFlotSample.html</runTarget>
           <module>ca.nanometrics.gflot.sample.GFlotSample</module>
+          <appEngineVersion>${gae.version}</appEngineVersion>
+          <appEngineHome>${gae.home}</appEngineHome>
+          <server>com.google.appengine.tools.development.gwt.AppEngineLauncher</server>
         </configuration>
       </plugin>
 
@@ -104,6 +141,24 @@
             </configuration>
           </execution>
         </executions>
+      </plugin>
+
+      <plugin>
+        <groupId>net.kindleit</groupId>
+        <artifactId>maven-gae-plugin</artifactId>
+        <version>0.9.1</version>
+        <executions>
+          <execution>
+            <id />
+            <phase>validate</phase>
+            <goals>
+              <goal>unpack</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <serverId>appengine.google.com</serverId>
+        </configuration>
       </plugin>
 
       <!-- Mark the project for Google Plugin for Eclipse (GPE) -->
