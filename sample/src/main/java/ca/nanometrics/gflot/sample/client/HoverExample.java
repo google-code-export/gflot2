@@ -18,6 +18,7 @@ import ca.nanometrics.gflot.client.options.TickFormatter;
 
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class HoverExample implements GFlotExample {
@@ -73,6 +74,10 @@ public class HoverExample implements GFlotExample {
 		// create the plot
 		SimplePlot plot = new SimplePlot(model, plotOptions);
 
+	      final PopupPanel popup = new PopupPanel();
+	        final Label label = new Label();
+	        popup.add(label);
+
 		// add hover listener
 		plot.addHoverListener(new PlotHoverListener() {
 			public void onPlotHover(Plot plot, PlotPosition position, PlotItem item) {
@@ -80,10 +85,17 @@ public class HoverExample implements GFlotExample {
 					positionLabel.setText("position: ("+position.getX()+","+position.getY()+")");
 				}
 				if (item != null) {
+				    String text = "x: " + item.getDataPoint().getX() + ", y: " + item.getDataPoint().getY();
+
 					selectedPointLabel
-							.setText("x: " + item.getDataPoint().getX() + ", y: " + item.getDataPoint().getY());
+							.setText(text);
+
+	                label.setText(text);
+	                popup.setPopupPosition(item.getPageX() + 10, item.getPageY() - 25);
+	                popup.show();
 				} else {
 					selectedPointLabel.setText(INSTRUCTIONS);
+					popup.hide();
 				}
 			}
 		}, false);

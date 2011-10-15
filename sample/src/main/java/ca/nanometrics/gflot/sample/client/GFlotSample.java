@@ -1,39 +1,90 @@
 package ca.nanometrics.gflot.sample.client;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.TabPanel;
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
+import com.google.gwt.dom.client.Style.Unit;
+import com.google.gwt.event.logical.shared.SelectionEvent;
+import com.google.gwt.event.logical.shared.SelectionHandler;
+import com.google.gwt.user.client.DOM;
+import com.google.gwt.user.client.ui.RootLayoutPanel;
+import com.google.gwt.user.client.ui.SimpleLayoutPanel;
+import com.google.gwt.user.client.ui.TabLayoutPanel;
+import com.google.gwt.user.client.ui.Widget;
 
-public class GFlotSample implements EntryPoint
+public class GFlotSample
+    implements EntryPoint
 {
+    private TabLayoutPanel tabPanel;
 
-    private final TabPanel m_tabs = new TabPanel();
+    private List<SimpleLayoutPanel> panels;
 
-    private void addExamples() {
-        addExample(new SimplePlotExample());
-        addExample(new BarChartExample());
-        addExample(new PlotWithInteractiveLegendExample());
-        addExample(new PlotWithOverviewExample());
-        addExample(new HoverExample());
-        addExample(new SlidingWindowExample());
-        addExample(new DecimationExample());
-        addExample(new MarkingsExample());
+    private List<GFlotExample> samples;
+
+    private void addExamples()
+    {
+        panels = new ArrayList<SimpleLayoutPanel>();
+        samples = new ArrayList<GFlotExample>();
+
+        addExample( new SimplePlotExample() );
+        addExample( new BarChartExample() );
+        addExample( new PlotWithInteractiveLegendExample() );
+        addExample( new PlotWithOverviewExample() );
+        addExample( new HoverExample() );
+        addExample( new SlidingWindowExample() );
+        addExample( new DecimationExample() );
+        addExample( new MarkingsExample() );
     }
 
-    private void addExample(GFlotExample example) {
-        m_tabs.add(example.createExample(), example.getName());
+    private void addExample( GFlotExample example )
+    {
+        SimpleLayoutPanel panel = new SimpleLayoutPanel();
+        tabPanel.add( panel, example.getName() );
+        panels.add( panel );
+        samples.add( example );
     }
 
-    public void onModuleLoad() {
+    public void onModuleLoad()
+    {
+        tabPanel = new TabLayoutPanel( 30, Unit.PX );
 
         addExamples();
 
-        m_tabs.setWidth("100%");
-        m_tabs.setHeight("100%");
+        tabPanel.addSelectionHandler( new SelectionHandler<Integer>()
+        {
+            @Override
+            public void onSelection( SelectionEvent<Integer> event )
+            {
+                initSample( event.getSelectedItem() );
+            }
+        } );
 
-        RootPanel.get().add(m_tabs);
+        RootLayoutPanel.get().add( tabPanel );
 
-        m_tabs.selectTab(0);
+        // selected by default
+        initSample( 0 );
+    }
+
+    private void initSample( final int index )
+    {
+        // deferred to prevent a bug where the axis are not correctly drawn
+        Scheduler.get().scheduleDeferred( new ScheduledCommand()
+        {
+            @Override
+            public void execute()
+            {
+                SimpleLayoutPanel panel = panels.get( index );
+                if ( null == panel.getWidget() )
+                {
+                    Widget sample =  samples.get( index ).createExample();
+                    DOM.setStyleAttribute( sample.getElement(), "marginTop", "10px" );
+                    panel.setWidget(sample );
+                }
+            }
+        } );
     }
 
 }
