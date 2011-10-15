@@ -91,7 +91,7 @@ public class PlotWithInteractiveLegendExample implements GFlotExample {
 		// put it on a panel
 		FlowPanel panel = new FlowPanel();
 		panel.add(new HTML(
-				"<p style=\"font-weight: bold; align: center;\">Month Temperatures (Daily Average in &deg;C)</p>"));
+				"<div style=\"font-weight: bold; align: center; margin: 0px 0px 5px 5px;\">Month Temperatures (Daily Average in &deg;C)</div>"));
 		panel.add(new PlotWithInteractiveLegend(plot));
 
 		return panel;
