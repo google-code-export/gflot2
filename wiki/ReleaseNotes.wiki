@@ -1,13 +1,11 @@
-#summary One-sentence summary of this page.
+#summary release notes
 
-= Introduction =
+= Incoming =
 
-Add your content here.
+  * adding functionality presents in flot but not in gflot
 
+= Version 2.0 =
 
-= Details =
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+  * gwt 2.4.0
+  * flot 0.7
+  * samples updated and hosted on appengine
