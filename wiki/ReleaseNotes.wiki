@@ -3,6 +3,7 @@
 = Incoming =
 
   * adding functionality presents in flot but not in gflot
+  * supports for multiple axes ?
 
 = Version 2.0 =
 
