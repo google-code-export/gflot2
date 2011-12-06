@@ -41,7 +41,6 @@ public class PlotWithInteractiveLegendExample
         PlotOptions plotOptions = new PlotOptions();
         plotOptions.setDefaultLineSeriesOptions( new LineSeriesOptions().setLineWidth( 1 ).setShow( true ) );
         plotOptions.setDefaultPointsOptions( new PointsSeriesOptions().setRadius( 2 ).setShow( true ) );
-        plotOptions.setDefaultShadowSize( 10 );
         plotOptions.setLegendOptions( new LegendOptions().setShow( false ) );
 
         // add tick formatter to the options
@@ -51,7 +50,6 @@ public class PlotWithInteractiveLegendExample
         // Note: you need to specified the colors in other for the legend to
         // work properly
         SeriesHandler ottawaSeries = model.addSeries( "Ottawa", "#edc240" );
-        ottawaSeries.getSeries().setShadowSize( 0 );
         SeriesHandler vancouverSeries = model.addSeries( "Vancouver", "#afd8f8" );
 
         // add data
