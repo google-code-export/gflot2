@@ -143,7 +143,6 @@ public class PlotModel
 
     private void fireOnAddSeries( String label, String color, SeriesHandler handler )
     {
-        System.out.println("colors : "+color);
         for ( PlotModelListener listener : m_listeners )
         {
             listener.onAddSeries( this, label, color, handler );
