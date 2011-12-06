@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008 Nanometrics Inc. 
+ * Copyright (c) 2008 Nanometrics Inc.
  *
  *	Permission is hereby granted, free of charge, to any person obtaining a copy
  *	of this software and associated documentation files (the "Software"), to deal
@@ -201,7 +201,9 @@ public class SimplePlot extends Widget implements PlotWidget {
 
 			loaded = true;
 
-			redraw();
+			// commenting this line since it seems it is useless
+			// see http://code.google.com/p/gflot/issues/detail?id=27
+			// redraw();
 			for (Command cmd : onLoadOperations) {
 				cmd.execute();
 			}
