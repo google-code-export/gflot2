@@ -60,9 +60,9 @@ public class SelectionOptions
         return this;
     }
 
-    public SelectionOptions setColor( String cssColor )
+    public SelectionOptions setColor( String color )
     {
-        put( "color", cssColor );
+        put( "color", color );
         return this;
     }
 }
