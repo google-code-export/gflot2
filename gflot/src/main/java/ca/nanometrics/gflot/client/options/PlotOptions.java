@@ -33,6 +33,9 @@ public class PlotOptions
 
     private DefaultSeriesOptions defaultSeriesOptions;
 
+    /**
+     * Set the legend options
+     */
     public PlotOptions setLegendOptions( LegendOptions legendOptions )
     {
         put( "legend", legendOptions );
@@ -51,18 +54,25 @@ public class PlotOptions
         return this;
     }
 
+    /**
+     * Set default Line series options that will be used unless options are set directly to the series
+     */
     public PlotOptions setDefaultLineSeriesOptions( AbstractSeriesOptions lineSeriesOptions )
     {
         getDefaultSeriesOptions().setDefaultLineSeriesOptions( lineSeriesOptions );
         return this;
     }
-
+    /**
+     * Set default Bar series options that will be used unless options are set directly to the series
+     */
     public PlotOptions setDefaultBarsSeriesOptions( AbstractSeriesOptions barSeriesOptions )
     {
         getDefaultSeriesOptions().setDefaultBarsSeriesOptions( barSeriesOptions );
         return this;
     }
-
+    /**
+     * Set default Points series options that will be used unless options are set directly to the series
+     */
     public PlotOptions setDefaultPointsOptions( AbstractSeriesOptions pointsSeriesOptions )
     {
         getDefaultSeriesOptions().setDefaultPointsOptions( pointsSeriesOptions );
