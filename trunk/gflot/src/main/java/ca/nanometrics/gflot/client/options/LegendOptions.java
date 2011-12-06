@@ -44,13 +44,22 @@ public class LegendOptions
         String formatLabel( String label, Series series );
     }
 
-    public static final String NORTH_EAST = "ne";
+    public enum LegendPosition
+    {
+        NORTH_EAST( "ne" ), NORTH_WEST( "nw" ), SOUTH_EAST( "se" ), SOUTH_WEST( "sw" );
 
-    public static final String NORTH_WEST = "nw";
+        private String flotValue;
 
-    public static final String SOUTH_EAST = "se";
+        LegendPosition( String flotValue )
+        {
+            this.flotValue = flotValue;
+        }
 
-    public static final String SOUTH_WEST = "sw";
+        String getFlotValue()
+        {
+            return flotValue;
+        }
+    }
 
     /**
      * Set if the legend is shown or not
@@ -80,12 +89,14 @@ public class LegendOptions
     }
 
     /**
-     * Set the overall placement of the legend within the plot ({@link #NORTH_EAST}, {@link #NORTH_WEST},
-     * {@link #SOUTH_EAST}, {@link #SOUTH_WEST}). By default, the placement is {@link #NORTH_EAST}.
+     * Set the overall placement of the legend within the plot (LegendPosition.NORTH_EAST, LegendPosition.NORTH_WEST,
+     * LegendPosition.SOUTH_EAST or LegendPosition.SOUTH_WEST). By default, the placement is LegendPosition.NORTH_EAST.
      */
-    public LegendOptions setPosition( String position )
+    public LegendOptions setPosition( LegendPosition position )
     {
-        put( "position", position );
+        assert null != position : "position can't be null";
+
+        put( "position", position.getFlotValue() );
         return this;
     }
 
@@ -160,9 +171,9 @@ public class LegendOptions
     /*-{
         legendOptions.labelFormatter = function(label, series)
         {
-          var jsonSeriesObject = @com.google.gwt.json.client.JSONObject::new(Lcom/google/gwt/core/client/JavaScriptObject;)(series);
-          var javaSeriesObject = @ca.nanometrics.gflot.client.Series::new(Lcom/google/gwt/json/client/JSONObject;)(jsonSeriesObject);
-          return labelFormatter.@ca.nanometrics.gflot.client.options.LegendOptions.LabelFormatter::formatLabel(Ljava/lang/String;Lca/nanometrics/gflot/client/Series;)(label, javaSeriesObject);
+            var jsonSeriesObject = @com.google.gwt.json.client.JSONObject::new(Lcom/google/gwt/core/client/JavaScriptObject;)(series);
+            var javaSeriesObject = @ca.nanometrics.gflot.client.Series::new(Lcom/google/gwt/json/client/JSONObject;)(jsonSeriesObject);
+            return labelFormatter.@ca.nanometrics.gflot.client.options.LegendOptions.LabelFormatter::formatLabel(Ljava/lang/String;Lca/nanometrics/gflot/client/Series;)(label, javaSeriesObject);
         };
-      }-*/;
+    }-*/;
 }
