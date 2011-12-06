@@ -1,9 +1,26 @@
 #summary release notes
 
-= Incoming =
+= Version 2.1 SNAPSHOT =
 
-  * adding functionality presents in flot but not in gflot
-  * supports for multiple axes ?
+2.1 is adding most of the flot options that wasn't wrap into gflot. There is also javadocs added to the different options and some assert to insure the user don't set wrong an option.
+
+  * added some javadocs to the differents options
+  * updated the PlotWithInteractiveLegendExample to use TimeSeriesAxisOptions
+  * Series
+    * added methods setColor(int), setClickable(boolean) and setHoverable(boolean)
+    * it is now possible to retrieve Series from SeriesHandler and pass a Series object to PlotModel.addSeries()
+  * SeriesOptions => AbstractSeriesOptions
+    * added methods to set the option fill with opacity and fillColor with a gradient
+  * BarSeriesOptions : added setHorizontal(boolean)
+  * LineSeriesOptions : added setSteps(boolean)
+  * GridOptions
+    * can now set background color with a gradient
+    * added setMinBorderMargin(int), setBorderColor(String), setAboveData(boolean)
+  * AxisOptions
+    * added methods for the following flot options : "color", "position", "tickColor", "show", "reserveSpace", "tickLength" and "alignTicksWithAxis"
+    * added methods on TimeSeriesAxisOptions for the flot options : "twelveHourClock", "tickSize" and "minTickSize"
+  * LegendOptions : changed setPosition to use an enum
+
 
 = Version 2.0 =
 
