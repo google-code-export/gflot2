@@ -26,7 +26,7 @@ package ca.nanometrics.gflot.client.options;
  * @author Alexander De Leon
  */
 public class AxisOptions
-    extends AbstractAxisOptions
+    extends AbstractAxisOptions<AxisOptions>
 {
 
     /**

@@ -25,7 +25,7 @@ package ca.nanometrics.gflot.client.options;
  * @author AlexanderDeleon
  */
 public class PointsSeriesOptions
-    extends AbstractSeriesOptions
+    extends AbstractSeriesOptions<PointsSeriesOptions>
 {
 
     /**
