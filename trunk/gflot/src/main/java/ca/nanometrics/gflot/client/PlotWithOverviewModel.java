@@ -133,7 +133,7 @@ public class PlotWithOverviewModel extends PlotModel {
 		}
 
 		@Override
-		public void setOptions(SeriesType type, AbstractSeriesOptions options) {
+		public void setOptions(SeriesType type, AbstractSeriesOptions<?> options) {
 			super.setOptions(type, options);
 			m_windowHandler.setOptions(type, options);
 		}
