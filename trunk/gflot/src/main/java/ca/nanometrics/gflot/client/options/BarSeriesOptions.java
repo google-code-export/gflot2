@@ -25,7 +25,7 @@ package ca.nanometrics.gflot.client.options;
  * @author AlexanderDeleon
  */
 public class BarSeriesOptions
-    extends AbstractSeriesOptions
+    extends AbstractSeriesOptions<BarSeriesOptions>
 {
     public enum BarAlignment
     {

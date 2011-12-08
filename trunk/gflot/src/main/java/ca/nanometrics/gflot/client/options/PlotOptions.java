@@ -42,13 +42,13 @@ public class PlotOptions
         return this;
     }
 
-    public PlotOptions setXAxisOptions( AbstractAxisOptions xAxisOptions )
+    public PlotOptions setXAxisOptions( AbstractAxisOptions<?> xAxisOptions )
     {
         put( "xaxis", xAxisOptions );
         return this;
     }
 
-    public PlotOptions setYAxisOptions( AbstractAxisOptions yAxisOptions )
+    public PlotOptions setYAxisOptions( AbstractAxisOptions<?> yAxisOptions )
     {
         put( "yaxis", yAxisOptions );
         return this;
@@ -57,7 +57,7 @@ public class PlotOptions
     /**
      * Set default Line series options that will be used unless options are set directly to the series
      */
-    public PlotOptions setDefaultLineSeriesOptions( AbstractSeriesOptions lineSeriesOptions )
+    public PlotOptions setDefaultLineSeriesOptions( AbstractSeriesOptions<?> lineSeriesOptions )
     {
         getDefaultSeriesOptions().setDefaultLineSeriesOptions( lineSeriesOptions );
         return this;
@@ -65,7 +65,7 @@ public class PlotOptions
     /**
      * Set default Bar series options that will be used unless options are set directly to the series
      */
-    public PlotOptions setDefaultBarsSeriesOptions( AbstractSeriesOptions barSeriesOptions )
+    public PlotOptions setDefaultBarsSeriesOptions( AbstractSeriesOptions<?> barSeriesOptions )
     {
         getDefaultSeriesOptions().setDefaultBarsSeriesOptions( barSeriesOptions );
         return this;
@@ -73,7 +73,7 @@ public class PlotOptions
     /**
      * Set default Points series options that will be used unless options are set directly to the series
      */
-    public PlotOptions setDefaultPointsOptions( AbstractSeriesOptions pointsSeriesOptions )
+    public PlotOptions setDefaultPointsOptions( AbstractSeriesOptions<?> pointsSeriesOptions )
     {
         getDefaultSeriesOptions().setDefaultPointsOptions( pointsSeriesOptions );
         return this;
@@ -130,17 +130,17 @@ public class PlotOptions
     private static class DefaultSeriesOptions
         extends JSONObjectWrapper
     {
-        public void setDefaultLineSeriesOptions( AbstractSeriesOptions lineSeriesOptions )
+        public void setDefaultLineSeriesOptions( AbstractSeriesOptions<?> lineSeriesOptions )
         {
             put( "lines", lineSeriesOptions );
         }
 
-        public void setDefaultBarsSeriesOptions( AbstractSeriesOptions barSeriesOptions )
+        public void setDefaultBarsSeriesOptions( AbstractSeriesOptions<?> barSeriesOptions )
         {
             put( "bars", barSeriesOptions );
         }
 
-        public void setDefaultPointsOptions( AbstractSeriesOptions pointsSeriesOptions )
+        public void setDefaultPointsOptions( AbstractSeriesOptions<?> pointsSeriesOptions )
         {
             put( "points", pointsSeriesOptions );
         }

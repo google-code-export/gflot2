@@ -33,7 +33,7 @@ import ca.nanometrics.gflot.client.util.JSONHelper;
  * @author AlexanderDeleon
  */
 public class TimeSeriesAxisOptions
-    extends AbstractAxisOptions
+    extends AbstractAxisOptions<TimeSeriesAxisOptions>
 {
     public enum TickTimeUnit
     {

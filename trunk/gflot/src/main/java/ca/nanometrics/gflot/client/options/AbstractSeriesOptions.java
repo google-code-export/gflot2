@@ -31,37 +31,38 @@ import com.google.gwt.json.client.JSONObject;
 /**
  * @author AlexanderDeleon
  */
-public abstract class AbstractSeriesOptions
+@SuppressWarnings( "unchecked" )
+public abstract class AbstractSeriesOptions<T extends AbstractSeriesOptions<?>>
     extends JSONObjectWrapper
 {
 
     /**
      * Set the visibility of the series. By default, the series is shown.
      */
-    public AbstractSeriesOptions setShow( boolean show )
+    public T setShow( boolean show )
     {
         put( "show", show );
-        return this;
+        return (T) this;
     }
 
     /**
      * Set the thickness of the line or outline in pixels. You can set it to 0 to prevent a line or outline from being
      * drawn; this will also hide the shadow.
      */
-    public AbstractSeriesOptions setLineWidth( double lineWidth )
+    public T setLineWidth( double lineWidth )
     {
         put( "lineWidth", new Double( lineWidth ) );
-        return this;
+        return (T) this;
     }
 
     /**
      * Set if the shape should be filled. For lines, this produces area graphs. You can use setFillColor "fillColor" to
      * specify the color of the fill.
      */
-    public AbstractSeriesOptions setFill( boolean fill )
+    public T setFill( boolean fill )
     {
         put( "fill", fill );
-        return this;
+        return (T) this;
     }
 
     /**
@@ -69,29 +70,29 @@ public abstract class AbstractSeriesOptions
      * color of the fill. You can adjust the opacity of the fill by setting fill to a number between 0 (fully
      * transparent) and 1 (fully opaque).
      */
-    public AbstractSeriesOptions setFill( double opacity )
+    public T setFill( double opacity )
     {
         assert opacity >= 0 && opacity <= 1 : "opacity range from 0.0 to 1.0";
 
         put( "fill", opacity );
-        return this;
+        return (T) this;
     }
 
     /**
      * Set the color to fill. If "fillColor" evaluates to false (default for everything except points which are filled
      * with white), the fill color is auto-set to the color of the data series.
      */
-    public AbstractSeriesOptions setFillColor( String cssColor )
+    public T setFillColor( String cssColor )
     {
         put( "fillColor", cssColor );
-        return this;
+        return (T) this;
     }
 
     /**
      * Set the color to fill. If "fillColor" evaluates to false (default for everything except points which are filled
      * with white), the fill color is auto-set to the color of the data series.
      */
-    public AbstractSeriesOptions setFillColor( Double fromOpacity, Double fromBrightness, Double toOpacity, Double toBrightness )
+    public T setFillColor( Double fromOpacity, Double fromBrightness, Double toOpacity, Double toBrightness )
     {
         assert ( null != fromOpacity || null != fromBrightness ) && ( null != toOpacity || null != toBrightness ) : "at least of the parameters must not be null";
         assert null == fromOpacity || fromOpacity >= 0 && fromOpacity <= 1 : "fromOpacity range from 0.0 to 1.0";
@@ -104,7 +105,7 @@ public abstract class AbstractSeriesOptions
             JSONHelper.wrapArrayIntoObject( "colors", new JSONWrapper[] { buildOpacityBrightnessObject( fromOpacity, fromBrightness ),
                 buildOpacityBrightnessObject( toOpacity, toBrightness ) } ) );
 
-        return this;
+        return (T) this;
     }
 
     private JSONObjectWrapper buildOpacityBrightnessObject( Double opacity, Double brightness )
