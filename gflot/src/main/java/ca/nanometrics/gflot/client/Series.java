@@ -136,7 +136,7 @@ public class Series
         return getInteger( "shadowSize" );
     }
 
-    public void setSeriesOptions( SeriesType type, AbstractSeriesOptions options )
+    public void setSeriesOptions( SeriesType type, AbstractSeriesOptions<?> options )
     {
         put( type.toString(), options );
     }

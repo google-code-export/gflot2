@@ -44,7 +44,7 @@ public class SeriesHandler {
 		m_data.clear();
 	}
 
-	public void setOptions(SeriesType type, AbstractSeriesOptions options) {
+	public void setOptions(SeriesType type, AbstractSeriesOptions<?> options) {
 		m_series.setSeriesOptions(type, options);
 	}
 
