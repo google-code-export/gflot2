@@ -4,7 +4,7 @@
 
 2.1 is adding most of the flot options that wasn't wrap into gflot. There is also javadocs added to the different options and some assert to insure the user don't set wrong an option.
 
-  * added automatic injection of flot javascript files. See [Usage] for more informations.
+  * added automatic injection of flot javascript files (r35). See [Usage] for more informations.
   * added some javadocs to the differents options
   * updated the PlotWithInteractiveLegendExample to use TimeSeriesAxisOptions
   * Series
