@@ -1,0 +1,19 @@
+#summary usage of gflot
+
+= Injection of flot javascript files =
+
+By default, gflot will automatically inject required flot javascript files inside the html page. If you need to control the javascript files which are added (to remove the selection plugin for example if you don't use it), add the following lines to your *.gwt.xml :
+{{{
+  <replace-with class="ca.nanometrics.gflot.client.resources.FlotJavaScriptLoader.NoInjectionImpl">
+    <when-type-is class="ca.nanometrics.gflot.client.resources.FlotJavaScriptLoader.Impl" />
+  </replace-with>
+}}}
+
+and then add the javascript files, you want to use into the header of your html page. For example :
+{{{
+    <!-- flot library -->
+    <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="gflotsample/js/excanvas.min.js"></script><![endif]-->
+    <script language="javascript" type="text/javascript" src="gflotsample/js/jquery.min.js"></script>
+    <script language="javascript" type="text/javascript" src="gflotsample/js/jquery.flot.min.js"></script>
+    <script language="javascript" type="text/javascript" src="gflotsample/js/jquery.flot.selection.min.js"></script>
+}}}
