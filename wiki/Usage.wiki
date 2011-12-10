@@ -9,7 +9,7 @@ By default, gflot will automatically inject required flot javascript files insid
   </replace-with>
 }}}
 
-and then add the javascript files, you want to use into the header of your html page. For example :
+and then add the javascript files you want to use into the header of your html page. For example :
 {{{
     <!-- flot library -->
     <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="gflotsample/js/excanvas.min.js"></script><![endif]-->
@@ -17,3 +17,13 @@ and then add the javascript files, you want to use into the header of your html 
     <script language="javascript" type="text/javascript" src="gflotsample/js/jquery.flot.min.js"></script>
     <script language="javascript" type="text/javascript" src="gflotsample/js/jquery.flot.selection.min.js"></script>
 }}}
+
+You can retrieve the javascript files from flot website :
+http://code.google.com/p/flot/downloads/list
+or directly in the source of this project.
+
+The flot version actually used is 0.7 and the javascript files are :
+  * jquery.min.js
+  * jquery.flot.min.js
+  * jquery.flot.selection.min.js
+  * excanvas.min.js
