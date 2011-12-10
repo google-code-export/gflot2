@@ -60,6 +60,7 @@ public class FlotJavaScriptLoader
             JavaScriptInjector.inject( bundle.jquery().getText() );
             JavaScriptInjector.inject( bundle.flot().getText() );
             JavaScriptInjector.inject( bundle.flotSelection().getText() );
+            JavaScriptInjector.inject( bundle.flotSymbol().getText() );
         }
     }
 
