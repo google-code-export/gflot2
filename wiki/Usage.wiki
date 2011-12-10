@@ -23,7 +23,8 @@ http://code.google.com/p/flot/downloads/list
 or directly in the source of this project.
 
 The flot version actually used is 0.7 and the javascript files are :
-  * jquery.min.js
-  * jquery.flot.min.js
-  * jquery.flot.selection.min.js
-  * excanvas.min.js
+  * jquery.min.js (required)
+  * jquery.flot.min.js (required)
+  * jquery.flot.selection.min.js (only for selection)
+  * jquery.flot.symbol.min.js (only for additional symbol on PointsSeriesOptions)
+  * excanvas.min.js (only for IE <= 8)
