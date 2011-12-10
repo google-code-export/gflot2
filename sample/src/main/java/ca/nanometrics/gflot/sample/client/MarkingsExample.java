@@ -21,6 +21,8 @@ import ca.nanometrics.gflot.client.options.Range;
 import ca.nanometrics.gflot.client.options.SelectionOptions;
 import ca.nanometrics.gflot.client.options.SelectionOptions.SelectionMode;
 
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Widget;
@@ -112,18 +114,19 @@ public class MarkingsExample
         plot.setHeight( 250 );
         plot.setOverviewHeight( 60 );
 
-        FlowPanel panel = new FlowPanel()
-        {
-            @Override
-            protected void onLoad()
-            {
-                super.onLoad();
-                plot.setLinearSelection( 0, 10 );
-                plot.redraw();
-            }
-        };
+        FlowPanel panel = new FlowPanel();
         panel.add( selectedPointLabel );
         panel.add( plot );
+
+        // have to wait the plot to be loaded before calling the setLinearSelection method
+        Scheduler.get().scheduleDeferred( new ScheduledCommand()
+        {
+            @Override
+            public void execute()
+            {
+                plot.setLinearSelection( 1, 8 );
+            }
+        } );
         return panel;
     }
 
