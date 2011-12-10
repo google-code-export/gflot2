@@ -17,6 +17,7 @@
   * GridOptions
     * can now set background color with a gradient
     * added setMinBorderMargin(int), setBorderColor(String), setAboveData(boolean)
+  * PointsSeriesOptions : added new symbol with the symbol plugin (r38)
   * AxisOptions
     * added methods for the following flot options : "color", "position", "tickColor", "show", "reserveSpace", "tickLength" and "alignTicksWithAxis"
     * added methods on TimeSeriesAxisOptions for the flot options : "twelveHourClock", "tickSize" and "minTickSize"
