@@ -12,6 +12,7 @@ import ca.nanometrics.gflot.client.options.LegendOptions;
 import ca.nanometrics.gflot.client.options.LineSeriesOptions;
 import ca.nanometrics.gflot.client.options.PlotOptions;
 import ca.nanometrics.gflot.client.options.PointsSeriesOptions;
+import ca.nanometrics.gflot.client.options.PointsSeriesOptions.PointSymbol;
 import ca.nanometrics.gflot.client.options.TimeSeriesAxisOptions;
 import ca.nanometrics.gflot.client.options.TimeSeriesAxisOptions.TickTimeUnit;
 
@@ -40,7 +41,7 @@ public class PlotWithInteractiveLegendExample
         PlotModel model = new PlotModel( PlotModelStrategy.defaultStrategy() );
         PlotOptions plotOptions = new PlotOptions();
         plotOptions.setDefaultLineSeriesOptions( new LineSeriesOptions().setLineWidth( 1 ).setShow( true ) );
-        plotOptions.setDefaultPointsOptions( new PointsSeriesOptions().setRadius( 2 ).setShow( true ) );
+        plotOptions.setDefaultPointsOptions( new PointsSeriesOptions().setRadius( 3 ).setShow( true ).setSymbol( PointSymbol.DIAMOND ) );
         plotOptions.setLegendOptions( new LegendOptions().setShow( false ) );
 
         // add tick formatter to the options
