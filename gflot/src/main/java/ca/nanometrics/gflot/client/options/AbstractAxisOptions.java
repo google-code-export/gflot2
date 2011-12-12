@@ -1,15 +1,22 @@
 package ca.nanometrics.gflot.client.options;
 
-import com.google.gwt.core.client.JavaScriptObject;
-
 import ca.nanometrics.gflot.client.Tick;
 import ca.nanometrics.gflot.client.util.JSONHelper;
 import ca.nanometrics.gflot.client.util.JSONObjectWrapper;
+
+import com.google.gwt.core.client.JavaScriptObject;
 
 @SuppressWarnings( "unchecked" )
 public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
     extends JSONObjectWrapper
 {
+    public interface TransformAxis
+    {
+        double transform( double value );
+
+        double inverseTransform( double value );
+    }
+
     public enum AxisPosition
     {
         TOP( "top" ), BOTTOM( "bottom" ), LEFT( "left" ), RIGHT( "right" );
@@ -104,7 +111,53 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
         return (T) this;
     }
 
-    // TODO transform and inverseTransform
+    /**
+     * Set the transform and inverseTransform functions. </br>You can design a function to compress or expand certain
+     * parts of the axis non-linearly, e.g. suppress weekends or compress far away points with a logarithm or some other
+     * means. When Flot draws the plot, each value is first put through the transform function. Here's an example, the x
+     * axis can be turned into a natural logarithm axis with the following code:
+     *
+     * <pre>
+     *   xaxis: {
+     *     transform: function (v) { return Math.log(v); },
+     *     inverseTransform: function (v) { return Math.exp(v); }
+     *   }
+     * </pre>
+     *
+     * Similarly, for reversing the y axis so the values appear in inverse order:
+     *
+     * <pre>
+     *   yaxis: {
+     *     transform: function (v) { return -v; },
+     *     inverseTransform: function (v) { return -v; }
+     *   }
+     * </pre>
+     *
+     * Note that for finding extrema, Flot assumes that the transform function does not reorder values (it should be
+     * monotone). </br> The inverseTransform is simply the inverse of the transform function (so v ==
+     * inverseTransform(transform(v)) for all relevant v). It is required for converting from canvas coordinates to data
+     * coordinates, e.g. for a mouse interaction where a certain pixel is clicked. If you don't use any interactive
+     * features of Flot, you may not need it.
+     */
+    public T setTransform( TransformAxis transform )
+    {
+        assert null != transform : "transform can't be null";
+
+        setTransformNative( getWrappedObj().getJavaScriptObject(), transform );
+        return (T) this;
+    }
+
+    private static native void setTransformNative( JavaScriptObject axisOptions, TransformAxis transform )
+    /*-{
+        axisOptions.transform = function(val)
+        {
+            return transform.@ca.nanometrics.gflot.client.options.AbstractAxisOptions.TransformAxis::transform(D)(val);
+        };
+        axisOptions.inverseTransform = function(val)
+        {
+            return transform.@ca.nanometrics.gflot.client.options.AbstractAxisOptions.TransformAxis::inverseTransform(D)(val);
+        };
+    }-*/;
 
     /**
      * Set a fixed width on the tick label in pixels.
