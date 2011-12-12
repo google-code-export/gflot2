@@ -1,5 +1,6 @@
 package ca.nanometrics.gflot.client.options;
 
+import ca.nanometrics.gflot.client.Axis;
 import ca.nanometrics.gflot.client.Tick;
 import ca.nanometrics.gflot.client.util.JSONHelper;
 import ca.nanometrics.gflot.client.util.JSONObjectWrapper;
@@ -15,6 +16,11 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
         double transform( double value );
 
         double inverseTransform( double value );
+    }
+
+    public interface TickGenerator
+    {
+        Tick[] generate( Axis axis );
     }
 
     public enum AxisPosition
@@ -204,10 +210,35 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
      */
     public T setTicks( Tick[] ticks )
     {
-        // TODO tick generator
         put( "ticks", JSONHelper.wrapArray( ticks ) );
         return (T) this;
     }
+
+    /**
+     * Set the tick generator.
+     */
+    public T setTicks( TickGenerator generator )
+    {
+        assert null != generator : "generator can't be null";
+
+        setTickGeneratorNative( getWrappedObj().getJavaScriptObject(), generator );
+        return (T) this;
+    }
+
+    private static native void setTickGeneratorNative( JavaScriptObject axisOptions, TickGenerator generator )
+    /*-{
+        axisOptions.ticks = function(axis)
+        {
+            var jsonAxisObject = @com.google.gwt.json.client.JSONObject::new(Lcom/google/gwt/core/client/JavaScriptObject;)(axis);
+            var javaAxisObject = @ca.nanometrics.gflot.client.Axis::new(Lcom/google/gwt/json/client/JSONObject;)(jsonAxisObject);
+
+            var generated = generator.@ca.nanometrics.gflot.client.options.AbstractAxisOptions.TickGenerator::generate(Lca/nanometrics/gflot/client/Axis;)(javaAxisObject);
+
+            var jsonArrayWrapper = @ca.nanometrics.gflot.client.util.JSONHelper::wrapArray([Lca/nanometrics/gflot/client/util/JSONWrapper;)(generated);
+            var jsonArray = @ca.nanometrics.gflot.client.util.JSONHelper::getJSONArray(Lca/nanometrics/gflot/client/util/JSONArrayWrapper;)(jsonArrayWrapper);
+            return jsonArray.@com.google.gwt.json.client.JSONArray::getJavaScriptObject()();
+        };
+    }-*/;
 
     /**
      * Set the tick formatter.
