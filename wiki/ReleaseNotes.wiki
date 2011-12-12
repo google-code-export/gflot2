@@ -22,6 +22,7 @@
     * added methods for the following flot options : "color", "position", "tickColor", "show", "reserveSpace", "tickLength" and "alignTicksWithAxis"
     * added methods on TimeSeriesAxisOptions for the flot options : "twelveHourClock", "tickSize" and "minTickSize"
     * added support for "transform" and "inverseTransform" options (r41)
+    * added support for tick generator (r44)
   * LegendOptions : changed setPosition to use an enum
 
 
