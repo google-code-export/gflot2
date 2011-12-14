@@ -1,6 +1,8 @@
 #summary release notes
 
-= Version 2.1 SNAPSHOT =
+= Version 2.2-SNAPSHOT =
+
+= Version 2.1 =
 
 2.1 is adding most of the flot options that wasn't wrap into gflot. There is also javadocs added to the different options and some assert to insure the user don't set wrong an option.
 
