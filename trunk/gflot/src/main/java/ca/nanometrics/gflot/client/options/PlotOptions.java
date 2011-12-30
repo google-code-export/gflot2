@@ -21,6 +21,8 @@
  */
 package ca.nanometrics.gflot.client.options;
 
+import com.google.gwt.json.client.JSONObject;
+
 import ca.nanometrics.gflot.client.util.JSONHelper;
 import ca.nanometrics.gflot.client.util.JSONObjectWrapper;
 
@@ -32,6 +34,14 @@ public class PlotOptions
 {
 
     private DefaultSeriesOptions defaultSeriesOptions;
+
+    public PlotOptions(){
+    	super();
+    }
+
+    public PlotOptions(JSONObject jsonObj){
+    	super(jsonObj);
+    }
 
     /**
      * Set the legend options
