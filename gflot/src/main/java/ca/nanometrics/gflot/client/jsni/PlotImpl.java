@@ -123,4 +123,9 @@ public class PlotImpl
         var offset = plot.getPlotOffset().bottom;
         return (offset === undefined) ? -1 : offset;
     }-*/;
+
+    static native JavaScriptObject getPlotOptions( Plot plot )
+    /*-{
+        return plot.getOptions();
+    }-*/;
 }
