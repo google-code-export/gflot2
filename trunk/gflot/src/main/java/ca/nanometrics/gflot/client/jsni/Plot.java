@@ -29,6 +29,7 @@ import ca.nanometrics.gflot.client.options.PlotOptions;
 import ca.nanometrics.gflot.client.util.JSONHelper;
 
 import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.user.client.Element;
 
 /**
@@ -119,5 +120,10 @@ public class Plot
     public final int getPlotOffsetBottom()
     {
         return PlotImpl.getPlotOffsetBottom( this );
+    }
+
+    public final PlotOptions getPlotOptions()
+    {
+        return new PlotOptions(new JSONObject(PlotImpl.getPlotOptions( this )));
     }
 }
