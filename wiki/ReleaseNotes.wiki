@@ -2,6 +2,9 @@
 
 = Version 2.2-SNAPSHOT =
 
+  * fixed the method setContainer on LegendOptions
+  * you can now pass the Element used as container in SimplePlot and PlotWithOverview constructors.
+
 = Version 2.1 =
 
 2.1 is adding most of the flot options that wasn't wrap into gflot. There is also javadocs added to the different options and some assert to insure the user don't set wrong an option.
