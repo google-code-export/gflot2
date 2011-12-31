@@ -22,11 +22,11 @@
 package ca.nanometrics.gflot.client.options;
 
 import ca.nanometrics.gflot.client.Series;
-import ca.nanometrics.gflot.client.util.JQueryHelper;
 import ca.nanometrics.gflot.client.util.JSONHelper;
 import ca.nanometrics.gflot.client.util.JSONObjectWrapper;
 
 import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.dom.client.Document;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
@@ -59,6 +59,47 @@ public class LegendOptions
         {
             return flotValue;
         }
+
+        static LegendPosition findByFlotValue( String flotValue )
+        {
+            if ( null != flotValue && !"".equals( flotValue ) )
+            {
+                for ( LegendPosition mode : values() )
+                {
+                    if ( mode.getFlotValue().equals( flotValue ) )
+                    {
+                        return mode;
+                    }
+                }
+            }
+            return null;
+        }
+    }
+
+    private static final String SHOW_KEY = "show";
+
+    private static final String LABEL_BOX_BORDER_COLOR_KEY = "labelBoxBorderColor";
+
+    private static final String NUM_COLUMNS_KEY = "noColumns";
+
+    private static final String POSITION_KEY = "position";
+
+    private static final String MARGIN_KEY = "margin";
+
+    private static final String BACKGROUND_COLOR_KEY = "backgroundColor";
+
+    private static final String BACKGROUND_OPACITY_KEY = "backgroundOpacity";
+
+    private static final String CONTAINER_KEY = "container";
+
+    public LegendOptions()
+    {
+        super();
+    }
+
+    public LegendOptions( JSONObject jsonObj )
+    {
+        super( jsonObj );
     }
 
     /**
@@ -66,8 +107,13 @@ public class LegendOptions
      */
     public LegendOptions setShow( boolean show )
     {
-        put( "show", show );
+        put( SHOW_KEY, show );
         return this;
+    }
+
+    public Boolean getShow()
+    {
+        return getBoolean( SHOW_KEY );
     }
 
     /**
@@ -75,8 +121,13 @@ public class LegendOptions
      */
     public LegendOptions setLabelBoxBorderColor( String cssColor )
     {
-        put( "labelBoxBorderColor", cssColor );
+        put( LABEL_BOX_BORDER_COLOR_KEY, cssColor );
         return this;
+    }
+
+    public String getLabelBoxBorderColor()
+    {
+        return getString( LABEL_BOX_BORDER_COLOR_KEY );
     }
 
     /**
@@ -84,8 +135,13 @@ public class LegendOptions
      */
     public LegendOptions setNumOfColumns( int cols )
     {
-        put( "noColumns", new Integer( cols ) );
+        put( NUM_COLUMNS_KEY, new Integer( cols ) );
         return this;
+    }
+
+    public Integer getNumOfColumns()
+    {
+        return getInteger( NUM_COLUMNS_KEY );
     }
 
     /**
@@ -96,8 +152,13 @@ public class LegendOptions
     {
         assert null != position : "position can't be null";
 
-        put( "position", position.getFlotValue() );
+        put( POSITION_KEY, position.getFlotValue() );
         return this;
+    }
+
+    public LegendPosition getPosition()
+    {
+        return LegendPosition.findByFlotValue( getString( POSITION_KEY ) );
     }
 
     /**
@@ -105,8 +166,13 @@ public class LegendOptions
      */
     public LegendOptions setMargin( double margin )
     {
-        put( "margin", new Double( margin ) );
+        put( MARGIN_KEY, new Double( margin ) );
         return this;
+    }
+
+    public Double getMargin()
+    {
+        return getDouble( MARGIN_KEY );
     }
 
     /**
@@ -114,7 +180,8 @@ public class LegendOptions
      */
     public LegendOptions setMargin( double marginX, double marginY )
     {
-        put( "margin", JSONHelper.wrapArray( new Double[] { marginX, marginY } ) );
+        // TODO get
+        put( MARGIN_KEY, JSONHelper.wrapArray( new Double[] { marginX, marginY } ) );
         return this;
     }
 
@@ -123,8 +190,13 @@ public class LegendOptions
      */
     public LegendOptions setBackgroundColor( String cssColor )
     {
-        put( "backgroundColor", cssColor );
+        put( BACKGROUND_COLOR_KEY, cssColor );
         return this;
+    }
+
+    public String getBackgroundColor()
+    {
+        return getString( BACKGROUND_COLOR_KEY );
     }
 
     /**
@@ -134,8 +206,13 @@ public class LegendOptions
     {
         assert opacity >= 0 && opacity <= 1 : "opacity range from 0.0 to 1.0";
 
-        put( "backgroundOpacity", new Double( opacity ) );
+        put( BACKGROUND_OPACITY_KEY, opacity );
         return this;
+    }
+
+    public Double getBackgroundOpacity()
+    {
+        return getDouble( BACKGROUND_OPACITY_KEY );
     }
 
     /**
@@ -149,10 +226,10 @@ public class LegendOptions
         String id = DOM.getElementProperty( container, "id" );
         if ( id == null || id.length() == 0 )
         {
-            id = "gflot-legend-container";
+            id = Document.get().createUniqueId();
             DOM.setElementProperty( container, "id", id );
         }
-        put( "container", JSONHelper.wrapObject( new JSONObject( JQueryHelper.getJQueryObj( id ) ) ) );
+        put( CONTAINER_KEY, "#" + id );
         return this;
     }
 
@@ -169,11 +246,10 @@ public class LegendOptions
 
     private static native void setLabelFormatterNative( JavaScriptObject legendOptions, LabelFormatter labelFormatter )
     /*-{
-        legendOptions.labelFormatter = function(label, series)
-        {
-            var jsonSeriesObject = @com.google.gwt.json.client.JSONObject::new(Lcom/google/gwt/core/client/JavaScriptObject;)(series);
-            var javaSeriesObject = @ca.nanometrics.gflot.client.Series::new(Lcom/google/gwt/json/client/JSONObject;)(jsonSeriesObject);
-            return labelFormatter.@ca.nanometrics.gflot.client.options.LegendOptions.LabelFormatter::formatLabel(Ljava/lang/String;Lca/nanometrics/gflot/client/Series;)(label, javaSeriesObject);
-        };
+		legendOptions.labelFormatter = function(label, series) {
+			var jsonSeriesObject = @com.google.gwt.json.client.JSONObject::new(Lcom/google/gwt/core/client/JavaScriptObject;)(series);
+			var javaSeriesObject = @ca.nanometrics.gflot.client.Series::new(Lcom/google/gwt/json/client/JSONObject;)(jsonSeriesObject);
+			return labelFormatter.@ca.nanometrics.gflot.client.options.LegendOptions.LabelFormatter::formatLabel(Ljava/lang/String;Lca/nanometrics/gflot/client/Series;)(label, javaSeriesObject);
+		};
     }-*/;
 }
