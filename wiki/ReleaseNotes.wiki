@@ -2,8 +2,8 @@
 
 = Version 2.2-SNAPSHOT =
 
-  * fixed the method setContainer on LegendOptions
-  * you can now pass the Element used as container in SimplePlot and PlotWithOverview constructors.
+  * fixed the method setContainer on LegendOptions (r58)
+  * you can now pass the Element used as container in SimplePlot and PlotWithOverview constructors. (r57)
 
 = Version 2.1 =
 
