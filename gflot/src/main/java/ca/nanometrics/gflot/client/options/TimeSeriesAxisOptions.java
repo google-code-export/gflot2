@@ -21,6 +21,9 @@
  */
 package ca.nanometrics.gflot.client.options;
 
+import com.google.gwt.json.client.JSONArray;
+import com.google.gwt.json.client.JSONObject;
+
 import ca.nanometrics.gflot.client.util.JSONArrayWrapper;
 import ca.nanometrics.gflot.client.util.JSONHelper;
 
@@ -50,25 +53,64 @@ public class TimeSeriesAxisOptions
         {
             return flotValue;
         }
-    }
 
-    private static class TickSizeWrapper
-        extends JSONArrayWrapper
-    {
-        TickSizeWrapper( double size, TickTimeUnit unit )
+        static TickTimeUnit findByFlotValue( String flotValue )
         {
-            super();
-            push( size );
-            push( unit.flotValue );
+            if ( null != flotValue && !"".equals( flotValue ) )
+            {
+                for ( TickTimeUnit mode : values() )
+                {
+                    if ( mode.getFlotValue().equals( flotValue ) )
+                    {
+                        return mode;
+                    }
+                }
+            }
+            return null;
         }
     }
 
-    /**
-     * default constructor
-     */
+    public static class TickSize
+        extends JSONArrayWrapper
+    {
+        TickSize( double size, TickTimeUnit unit )
+        {
+            super();
+            set( 0, size );
+            set( 1, unit.getFlotValue() );
+        }
+
+        TickSize( JSONArray jsonArray )
+        {
+            super( jsonArray );
+        }
+
+        public double getSize()
+        {
+            return get( 0 ).isNumber().doubleValue();
+        }
+
+        public TickTimeUnit getUnit()
+        {
+            return TickTimeUnit.findByFlotValue( get( 1 ).isString().stringValue() );
+        }
+    }
+
+    private static final String TIME_FORMAT_KEY = "timeformat";
+
+    private static final String MONTH_NAMES_KEY = "monthNames";
+
+    private static final String TWELVE_HOUR_CLOCK_KEY = "twelveHourClock";
+
     public TimeSeriesAxisOptions()
     {
-        put( "mode", "time" );
+        super();
+        put( MODE_KEY, TIME_MODE_KEY );
+    }
+
+    TimeSeriesAxisOptions( JSONObject jsonObj )
+    {
+        super( jsonObj );
     }
 
     /**
@@ -94,8 +136,13 @@ public class TimeSeriesAxisOptions
      */
     public TimeSeriesAxisOptions setTimeFormat( String timeFormat )
     {
-        put( "timeformat", timeFormat );
+        put( TIME_FORMAT_KEY, timeFormat );
         return this;
+    }
+
+    public String getTimeFormat()
+    {
+        return getString( TIME_FORMAT_KEY );
     }
 
     /**
@@ -106,8 +153,13 @@ public class TimeSeriesAxisOptions
         assert null != monthNames : "monthNames can't bu null";
         assert monthNames.length == 12 : "monthNames must have all 12 month names";
 
-        put( "monthNames", JSONHelper.wrapArray( monthNames ) );
+        put( MONTH_NAMES_KEY, JSONHelper.wrapArray( monthNames ) );
         return this;
+    }
+
+    public String[] getMonthNames()
+    {
+        return getStringArray( MONTH_NAMES_KEY );
     }
 
     /**
@@ -115,8 +167,13 @@ public class TimeSeriesAxisOptions
      */
     public TimeSeriesAxisOptions setTwelveHourClock( boolean twelveHourClock )
     {
-        put( "twelveHourClock", twelveHourClock );
+        put( TWELVE_HOUR_CLOCK_KEY, twelveHourClock );
         return this;
+    }
+
+    public Boolean getTwelveHourClock()
+    {
+        return getBoolean( TWELVE_HOUR_CLOCK_KEY );
     }
 
     /**
@@ -126,8 +183,18 @@ public class TimeSeriesAxisOptions
     {
         assert null != unit : "unit can't be null";
 
-        put( "tickSize", new TickSizeWrapper( tickSize, unit ) );
+        put( TICK_SIZE_KEY, new TickSize( tickSize, unit ) );
         return this;
+    }
+
+    public TickSize getTickSize()
+    {
+        JSONArray array = getArray( TICK_SIZE_KEY );
+        if ( null == array )
+        {
+            return null;
+        }
+        return new TickSize( array );
     }
 
     /**
@@ -137,8 +204,18 @@ public class TimeSeriesAxisOptions
     {
         assert null != unit : "unit can't be null";
 
-        put( "minTickSize", new TickSizeWrapper( minTickSize, unit ) );
+        put( MIN_TICK_SIZE_KEY, new TickSize( minTickSize, unit ) );
         return this;
+    }
+
+    public TickSize getMinTickSize()
+    {
+        JSONArray array = getArray( MIN_TICK_SIZE_KEY );
+        if ( null == array )
+        {
+            return null;
+        }
+        return new TickSize( array );
     }
 
 }

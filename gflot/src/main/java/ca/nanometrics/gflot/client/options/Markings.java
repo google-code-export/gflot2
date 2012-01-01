@@ -39,7 +39,7 @@ public class Markings
         super();
     }
 
-    public Markings( JSONArray jsonArray )
+    Markings( JSONArray jsonArray )
     {
         super( jsonArray );
     }

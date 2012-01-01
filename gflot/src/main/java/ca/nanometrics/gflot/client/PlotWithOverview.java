@@ -24,6 +24,7 @@ package ca.nanometrics.gflot.client;
 import ca.nanometrics.gflot.client.event.PlotClickListener;
 import ca.nanometrics.gflot.client.event.PlotHoverListener;
 import ca.nanometrics.gflot.client.event.SelectionListener;
+import ca.nanometrics.gflot.client.options.GlobalSeriesOptions;
 import ca.nanometrics.gflot.client.options.LegendOptions;
 import ca.nanometrics.gflot.client.options.LineSeriesOptions;
 import ca.nanometrics.gflot.client.options.PlotOptions;
@@ -45,10 +46,11 @@ public class PlotWithOverview
 {
     public static final int DEFAULT_OVERVIEW_HEIGHT = 100; // px
 
-    public static final PlotOptions DEFAULT_OVERVIEW_OPTIONS = new PlotOptions().setDefaultShadowSize( 0 )
+    public static final PlotOptions DEFAULT_OVERVIEW_OPTIONS = new PlotOptions()
         .setLegendOptions( new LegendOptions().setShow( false ) )
-        .setDefaultLineSeriesOptions( new LineSeriesOptions().setLineWidth( 1 ).setFill( true ) )
-        .setSelectionOptions( new SelectionOptions().setMode( SelectionMode.X ).setDragging( true ) );
+        .setGlobalSeriesOptions(
+            new GlobalSeriesOptions().setLineSeriesOptions( new LineSeriesOptions().setLineWidth( 1 ).setFill( true ) ).setShadowSize( 0d ) )
+        .setSelectionOptions( new SelectionOptions().setMode( SelectionMode.X ) );
 
     private final SimplePlot m_windowPlot;
 
@@ -77,8 +79,7 @@ public class PlotWithOverview
         initWidget( createUi() );
     }
 
-    public PlotWithOverview( PlotWithOverviewModel model, PlotOptions windowPlotOptions,
-                             Element windowPlotContainer, Element overviewPlotContainer )
+    public PlotWithOverview( PlotWithOverviewModel model, PlotOptions windowPlotOptions, Element windowPlotContainer, Element overviewPlotContainer )
     {
         m_model = model;
         m_windowPlot = new SimplePlot( windowPlotContainer, m_model.getWindowPlotModel(), windowPlotOptions );

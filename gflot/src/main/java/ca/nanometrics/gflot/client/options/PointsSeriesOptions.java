@@ -21,6 +21,8 @@
  */
 package ca.nanometrics.gflot.client.options;
 
+import com.google.gwt.json.client.JSONObject;
+
 /**
  * @author AlexanderDeleon
  */
@@ -42,6 +44,35 @@ public class PointsSeriesOptions
         {
             return flotValue;
         }
+
+        static PointSymbol findByFlotValue( String flotValue )
+        {
+            if ( null != flotValue && !"".equals( flotValue ) )
+            {
+                for ( PointSymbol mode : values() )
+                {
+                    if ( mode.getFlotValue().equals( flotValue ) )
+                    {
+                        return mode;
+                    }
+                }
+            }
+            return null;
+        }
+    }
+
+    private static final String RADIUS_KEY = "radius";
+
+    private static final String SYMBOL_KEY = "symbol";
+
+    public PointsSeriesOptions()
+    {
+        super();
+    }
+
+    PointsSeriesOptions( JSONObject jsonObj )
+    {
+        super( jsonObj );
     }
 
     /**
@@ -49,8 +80,13 @@ public class PointsSeriesOptions
      */
     public PointsSeriesOptions setRadius( double radius )
     {
-        put( "radius", new Double( radius ) );
+        put( RADIUS_KEY, new Double( radius ) );
         return this;
+    }
+
+    public Double getRadius()
+    {
+        return getDouble( RADIUS_KEY );
     }
 
     /**
@@ -60,8 +96,13 @@ public class PointsSeriesOptions
     {
         assert null != symbol : "symbol can't be null";
 
-        put( "symbol", symbol.getFlotValue() );
+        put( SYMBOL_KEY, symbol.getFlotValue() );
         return this;
+    }
+
+    public PointSymbol getSymbol()
+    {
+        return PointSymbol.findByFlotValue( getString( SYMBOL_KEY ) );
     }
 
 }

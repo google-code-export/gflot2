@@ -21,10 +21,10 @@
  */
 package ca.nanometrics.gflot.client.options;
 
-import com.google.gwt.json.client.JSONObject;
-
 import ca.nanometrics.gflot.client.util.JSONHelper;
 import ca.nanometrics.gflot.client.util.JSONObjectWrapper;
+
+import com.google.gwt.json.client.JSONObject;
 
 /**
  * @author AlexanderDeleon
@@ -32,61 +32,46 @@ import ca.nanometrics.gflot.client.util.JSONObjectWrapper;
 public class PlotOptions
     extends JSONObjectWrapper
 {
+    private static final String COLORS_KEY = "colors";
 
-    private DefaultSeriesOptions defaultSeriesOptions;
+    private static final String LEGEND_KEY = "legend";
 
-    public PlotOptions(){
-    	super();
-    }
+    private static final String X_AXIS_KEY = "xaxis";
 
-    public PlotOptions(JSONObject jsonObj){
-    	super(jsonObj);
-    }
+    private static final String Y_AXIS_KEY = "yaxis";
 
-    /**
-     * Set the legend options
-     */
-    public PlotOptions setLegendOptions( LegendOptions legendOptions )
+    private static final String SERIES_KEY = "series";
+
+    private static final String GRID_KEY = "grid";
+
+    private static final String SELECTION_KEY = "selection";
+
+    private LegendOptions legendOptions;
+
+    private AbstractAxisOptions<?> xAxisOptions;
+
+    private AbstractAxisOptions<?> yAxisOptions;
+
+    private SelectionOptions selectionOptions;
+
+    private GridOptions gridOptions;
+
+    private GlobalSeriesOptions globalSeriesOptions;
+
+    public PlotOptions()
     {
-        put( "legend", legendOptions );
-        return this;
+        super();
     }
 
-    public PlotOptions setXAxisOptions( AbstractAxisOptions<?> xAxisOptions )
+    public PlotOptions( JSONObject jsonObj )
     {
-        put( "xaxis", xAxisOptions );
-        return this;
-    }
-
-    public PlotOptions setYAxisOptions( AbstractAxisOptions<?> yAxisOptions )
-    {
-        put( "yaxis", yAxisOptions );
-        return this;
-    }
-
-    /**
-     * Set default Line series options that will be used unless options are set directly to the series
-     */
-    public PlotOptions setDefaultLineSeriesOptions( AbstractSeriesOptions<?> lineSeriesOptions )
-    {
-        getDefaultSeriesOptions().setDefaultLineSeriesOptions( lineSeriesOptions );
-        return this;
-    }
-    /**
-     * Set default Bar series options that will be used unless options are set directly to the series
-     */
-    public PlotOptions setDefaultBarsSeriesOptions( AbstractSeriesOptions<?> barSeriesOptions )
-    {
-        getDefaultSeriesOptions().setDefaultBarsSeriesOptions( barSeriesOptions );
-        return this;
-    }
-    /**
-     * Set default Points series options that will be used unless options are set directly to the series
-     */
-    public PlotOptions setDefaultPointsOptions( AbstractSeriesOptions<?> pointsSeriesOptions )
-    {
-        getDefaultSeriesOptions().setDefaultPointsOptions( pointsSeriesOptions );
-        return this;
+        super( jsonObj );
+        globalSeriesOptions = new GlobalSeriesOptions( getObject( SERIES_KEY ) );
+        selectionOptions = new SelectionOptions( getObject( SELECTION_KEY ) );
+        gridOptions = new GridOptions( getObject( GRID_KEY ) );
+        legendOptions = new LegendOptions( getObject( LEGEND_KEY ) );
+        xAxisOptions = AbstractAxisOptions.createAxisOptions( getObject( X_AXIS_KEY ) );
+        yAxisOptions = AbstractAxisOptions.createAxisOptions( getObject( Y_AXIS_KEY ) );
     }
 
     /**
@@ -98,66 +83,94 @@ public class PlotOptions
      * If there are more data series than colors, Flot will try to generate extra colors by lightening and darkening
      * colors in the theme.
      */
-    public PlotOptions setDefaultColors( String[] colors )
+    public PlotOptions setDefaultColorTheme( String[] colors )
     {
         assert null != colors && colors.length > 0 : "colors can't be null or empty";
 
-        put( "colors", JSONHelper.wrapArray( colors ) );
+        put( COLORS_KEY, JSONHelper.wrapArray( colors ) );
         return this;
     }
 
     /**
-     * Set the default size of shadows in pixels. Set it to 0 to remove shadows.
+     * @return the default color theme to get colors for the data series from
      */
-    public PlotOptions setDefaultShadowSize( double shadow )
+    public String[] getDefaultColorTheme()
     {
-        getDefaultSeriesOptions().setDefaultShadowSize( shadow );
+        return getStringArray( COLORS_KEY );
+    }
+
+    /**
+     * Set the legend options
+     */
+    public PlotOptions setLegendOptions( LegendOptions legendOptions )
+    {
+        this.legendOptions = legendOptions;
+        put( LEGEND_KEY, legendOptions );
         return this;
+    }
+
+    public LegendOptions getLegendOptions()
+    {
+        return legendOptions;
+    }
+
+    public PlotOptions setXAxisOptions( AbstractAxisOptions<?> xAxisOptions )
+    {
+        this.xAxisOptions = xAxisOptions;
+        put( X_AXIS_KEY, xAxisOptions );
+        return this;
+    }
+
+    public AbstractAxisOptions<?> getXAxisOptions()
+    {
+        return xAxisOptions;
+    }
+
+    public PlotOptions setYAxisOptions( AbstractAxisOptions<?> yAxisOptions )
+    {
+        this.yAxisOptions = yAxisOptions;
+        put( Y_AXIS_KEY, yAxisOptions );
+        return this;
+    }
+
+    public AbstractAxisOptions<?> getyAxisOptions()
+    {
+        return yAxisOptions;
     }
 
     public PlotOptions setSelectionOptions( SelectionOptions selectionOptions )
     {
-        put( "selection", selectionOptions );
+        this.selectionOptions = selectionOptions;
+        put( SELECTION_KEY, selectionOptions );
         return this;
+    }
+
+    public SelectionOptions getSelectionOptions()
+    {
+        return selectionOptions;
     }
 
     public PlotOptions setGridOptions( GridOptions gridOptions )
     {
-        put( "grid", gridOptions );
+        this.gridOptions = gridOptions;
+        put( GRID_KEY, gridOptions );
         return this;
     }
 
-    private DefaultSeriesOptions getDefaultSeriesOptions()
+    public GridOptions getGridOptions()
     {
-        if ( defaultSeriesOptions == null )
-        {
-            defaultSeriesOptions = new DefaultSeriesOptions();
-            put( "series", defaultSeriesOptions );
-        }
-        return defaultSeriesOptions;
+        return gridOptions;
     }
 
-    private static class DefaultSeriesOptions
-        extends JSONObjectWrapper
+    public PlotOptions setGlobalSeriesOptions( GlobalSeriesOptions globalSeriesOptions )
     {
-        public void setDefaultLineSeriesOptions( AbstractSeriesOptions<?> lineSeriesOptions )
-        {
-            put( "lines", lineSeriesOptions );
-        }
+        this.globalSeriesOptions = globalSeriesOptions;
+        put( SERIES_KEY, globalSeriesOptions );
+        return this;
+    }
 
-        public void setDefaultBarsSeriesOptions( AbstractSeriesOptions<?> barSeriesOptions )
-        {
-            put( "bars", barSeriesOptions );
-        }
-
-        public void setDefaultPointsOptions( AbstractSeriesOptions<?> pointsSeriesOptions )
-        {
-            put( "points", pointsSeriesOptions );
-        }
-
-        public void setDefaultShadowSize( double shadow )
-        {
-            put( "shadowSize", new Double( shadow ) );
-        }
+    public GlobalSeriesOptions getGlobalSeriesOptions()
+    {
+        return globalSeriesOptions;
     }
 }
