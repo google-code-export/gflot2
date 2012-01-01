@@ -20,7 +20,7 @@ public class Range
         super();
     }
 
-    public Range( JSONObject jsonObj )
+    Range( JSONObject jsonObj )
     {
         super( jsonObj );
     }

@@ -36,13 +36,42 @@ public abstract class AbstractSeriesOptions<T extends AbstractSeriesOptions<?>>
     extends JSONObjectWrapper
 {
 
+    protected static final String SHOW_KEY = "show";
+
+    protected static final String LINE_WIDTH_KEY = "lineWidth";
+
+    protected static final String FILL_KEY = "fill";
+
+    protected static final String FILL_COLOR_KEY = "fillColor";
+
+    protected static final String FILL_COLOR_COLORS_KEY = "colors";
+
+    protected static final String OPACITY_KEY = "opacity";
+
+    protected static final String BRIGHTNESS_KEY = "brightness";
+
+    public AbstractSeriesOptions()
+    {
+        super();
+    }
+
+    AbstractSeriesOptions( JSONObject jsonObj )
+    {
+        super( jsonObj );
+    }
+
     /**
      * Set the visibility of the series. By default, the series is shown.
      */
     public T setShow( boolean show )
     {
-        put( "show", show );
+        put( SHOW_KEY, show );
         return (T) this;
+    }
+
+    public Boolean getShow()
+    {
+        return getBoolean( SHOW_KEY );
     }
 
     /**
@@ -51,8 +80,13 @@ public abstract class AbstractSeriesOptions<T extends AbstractSeriesOptions<?>>
      */
     public T setLineWidth( double lineWidth )
     {
-        put( "lineWidth", new Double( lineWidth ) );
+        put( LINE_WIDTH_KEY, new Double( lineWidth ) );
         return (T) this;
+    }
+
+    public Double getLineWidth()
+    {
+        return getDouble( LINE_WIDTH_KEY );
     }
 
     /**
@@ -61,8 +95,13 @@ public abstract class AbstractSeriesOptions<T extends AbstractSeriesOptions<?>>
      */
     public T setFill( boolean fill )
     {
-        put( "fill", fill );
+        put( FILL_KEY, fill );
         return (T) this;
+    }
+
+    public Boolean getFillBoolean()
+    {
+        return getBoolean( FILL_KEY );
     }
 
     /**
@@ -74,8 +113,13 @@ public abstract class AbstractSeriesOptions<T extends AbstractSeriesOptions<?>>
     {
         assert opacity >= 0 && opacity <= 1 : "opacity range from 0.0 to 1.0";
 
-        put( "fill", opacity );
+        put( FILL_KEY, opacity );
         return (T) this;
+    }
+
+    public Double getFillOpacity()
+    {
+        return getDouble( FILL_KEY );
     }
 
     /**
@@ -84,8 +128,13 @@ public abstract class AbstractSeriesOptions<T extends AbstractSeriesOptions<?>>
      */
     public T setFillColor( String cssColor )
     {
-        put( "fillColor", cssColor );
+        put( FILL_COLOR_KEY, cssColor );
         return (T) this;
+    }
+
+    public String getFillColor()
+    {
+        return getString( FILL_COLOR_KEY );
     }
 
     /**
@@ -101,8 +150,8 @@ public abstract class AbstractSeriesOptions<T extends AbstractSeriesOptions<?>>
         assert null == toBrightness || toBrightness >= 0 && toBrightness <= 1 : "toBrightness range from 0.0 to 1.0";
 
         put(
-            "fillColor",
-            JSONHelper.wrapArrayIntoObject( "colors", new JSONWrapper[] { buildOpacityBrightnessObject( fromOpacity, fromBrightness ),
+            FILL_COLOR_KEY,
+            JSONHelper.wrapArrayIntoObject( FILL_COLOR_COLORS_KEY, new JSONWrapper[] { buildOpacityBrightnessObject( fromOpacity, fromBrightness ),
                 buildOpacityBrightnessObject( toOpacity, toBrightness ) } ) );
 
         return (T) this;
@@ -113,12 +162,18 @@ public abstract class AbstractSeriesOptions<T extends AbstractSeriesOptions<?>>
         JSONObject obj = new JSONObject();
         if ( null != opacity )
         {
-            obj.put( "opacity", new JSONNumber( opacity ) );
+            obj.put( OPACITY_KEY, new JSONNumber( opacity ) );
         }
         if ( null != brightness )
         {
-            obj.put( "brightness", new JSONNumber( brightness ) );
+            obj.put( BRIGHTNESS_KEY, new JSONNumber( brightness ) );
         }
         return JSONHelper.wrapObject( obj );
     }
+
+    // public String getFillColor()
+    // {
+    // TODO get method for the opacity and brightness
+    // return getString( FILL_COLOR_KEY );
+    // }
 }

@@ -6,11 +6,29 @@ import ca.nanometrics.gflot.client.util.JSONHelper;
 import ca.nanometrics.gflot.client.util.JSONObjectWrapper;
 
 import com.google.gwt.core.client.JavaScriptObject;
+import com.google.gwt.json.client.JSONArray;
+import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.json.client.JSONString;
+import com.google.gwt.json.client.JSONValue;
 
 @SuppressWarnings( "unchecked" )
 public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
     extends JSONObjectWrapper
 {
+    static AbstractAxisOptions<?> createAxisOptions( JSONObject jsonObj )
+    {
+        JSONValue modeValue = jsonObj.get( MODE_KEY );
+        if ( null != modeValue )
+        {
+            JSONString modeString = modeValue.isString();
+            if ( null != modeString && modeString.stringValue().equals( TIME_MODE_KEY ) )
+            {
+                return new TimeSeriesAxisOptions( jsonObj );
+            }
+        }
+        return new AxisOptions( jsonObj );
+    }
+
     public interface TransformAxis
     {
         double transform( double value );
@@ -38,6 +56,65 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
         {
             return flotValue;
         }
+
+        static AxisPosition findByFlotValue( String flotValue )
+        {
+            if ( null != flotValue && !"".equals( flotValue ) )
+            {
+                for ( AxisPosition mode : values() )
+                {
+                    if ( mode.getFlotValue().equals( flotValue ) )
+                    {
+                        return mode;
+                    }
+                }
+            }
+            return null;
+        }
+    }
+
+    private static final String SHOW_KEY = "show";
+
+    private static final String POSITION_KEY = "position";
+
+    private static final String COLOR_KEY = "color";
+
+    private static final String TICK_COLOR_KEY = "tickColor";
+
+    private static final String MIN_KEY = "min";
+
+    private static final String MAX_KEY = "max";
+
+    private static final String AUTOSCALE_MARGIN_KEY = "autoscaleMargin";
+
+    private static final String LABEL_WIDTH_KEY = "labelWidth";
+
+    private static final String LABEL_HEIGHT_KEY = "labelHeight";
+
+    private static final String RESERVE_SPACE_KEY = "reserveSpace";
+
+    private static final String TICKS_KEY = "ticks";
+
+    private static final String TICK_LENGTH_KEY = "tickLength";
+
+    private static final String ALIGN_TICKS_KEY = "alignTicksWithAxis";
+
+    protected static final String TICK_SIZE_KEY = "tickSize";
+
+    protected static final String MIN_TICK_SIZE_KEY = "minTickSize";
+
+    protected static final String MODE_KEY = "mode";
+
+    protected static final String TIME_MODE_KEY = "time";
+
+    public AbstractAxisOptions()
+    {
+        super();
+    }
+
+    AbstractAxisOptions( JSONObject jsonObj )
+    {
+        super( jsonObj );
     }
 
     /**
@@ -46,8 +123,13 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
      */
     public T setShow( boolean show )
     {
-        put( "show", show );
+        put( SHOW_KEY, show );
         return (T) this;
+    }
+
+    public Boolean getShow()
+    {
+        return getBoolean( SHOW_KEY );
     }
 
     /**
@@ -58,8 +140,13 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
     {
         assert null != position : "position can't be null";
 
-        put( "position", position.getFlotValue() );
+        put( POSITION_KEY, position.getFlotValue() );
         return (T) this;
+    }
+
+    public AxisPosition getPosition()
+    {
+        return AxisPosition.findByFlotValue( getString( POSITION_KEY ) );
     }
 
     /**
@@ -69,8 +156,13 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
      */
     public T setColor( String color )
     {
-        put( "color", color );
+        put( COLOR_KEY, color );
         return (T) this;
+    }
+
+    public String getColor()
+    {
+        return getString( COLOR_KEY );
     }
 
     /**
@@ -78,8 +170,13 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
      */
     public T setTickColor( String tickColor )
     {
-        put( "tickColor", tickColor );
+        put( TICK_COLOR_KEY, tickColor );
         return (T) this;
+    }
+
+    public String getTickColor()
+    {
+        return getString( TICK_COLOR_KEY );
     }
 
     /**
@@ -89,8 +186,13 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
      */
     public T setMinimum( double min )
     {
-        put( "min", new Double( min ) );
+        put( MIN_KEY, new Double( min ) );
         return (T) this;
+    }
+
+    public Double getMinimum()
+    {
+        return getDouble( MIN_KEY );
     }
 
     /**
@@ -100,8 +202,13 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
      */
     public T setMaximum( double max )
     {
-        put( "max", new Double( max ) );
+        put( MAX_KEY, new Double( max ) );
         return (T) this;
+    }
+
+    public Double getMaximum()
+    {
+        return getDouble( MAX_KEY );
     }
 
     /**
@@ -113,8 +220,13 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
      */
     public T setAutoscaleMargin( double margin )
     {
-        put( "autoscaleMargin", new Double( margin ) );
+        put( AUTOSCALE_MARGIN_KEY, new Double( margin ) );
         return (T) this;
+    }
+
+    public Double getAutoscaleMargin()
+    {
+        return getDouble( AUTOSCALE_MARGIN_KEY );
     }
 
     /**
@@ -155,14 +267,12 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
 
     private static native void setTransformNative( JavaScriptObject axisOptions, TransformAxis transform )
     /*-{
-        axisOptions.transform = function(val)
-        {
-            return transform.@ca.nanometrics.gflot.client.options.AbstractAxisOptions.TransformAxis::transform(D)(val);
-        };
-        axisOptions.inverseTransform = function(val)
-        {
-            return transform.@ca.nanometrics.gflot.client.options.AbstractAxisOptions.TransformAxis::inverseTransform(D)(val);
-        };
+		axisOptions.transform = function(val) {
+			return transform.@ca.nanometrics.gflot.client.options.AbstractAxisOptions.TransformAxis::transform(D)(val);
+		};
+		axisOptions.inverseTransform = function(val) {
+			return transform.@ca.nanometrics.gflot.client.options.AbstractAxisOptions.TransformAxis::inverseTransform(D)(val);
+		};
     }-*/;
 
     /**
@@ -170,8 +280,13 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
      */
     public T setLabelWidth( double labelWidth )
     {
-        put( "labelWidth", new Double( labelWidth ) );
+        put( LABEL_WIDTH_KEY, new Double( labelWidth ) );
         return (T) this;
+    }
+
+    public Double getLabelWidth()
+    {
+        return getDouble( LABEL_WIDTH_KEY );
     }
 
     /**
@@ -179,8 +294,13 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
      */
     public T setLabelHeight( double labelHeight )
     {
-        put( "labelHeight", new Double( labelHeight ) );
+        put( LABEL_HEIGHT_KEY, new Double( labelHeight ) );
         return (T) this;
+    }
+
+    public Double getLabelHeight()
+    {
+        return getDouble( LABEL_HEIGHT_KEY );
     }
 
     /**
@@ -189,8 +309,13 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
      */
     public T setReserveSpace( boolean reserveSpace )
     {
-        put( "reserveSpace", reserveSpace );
+        put( RESERVE_SPACE_KEY, reserveSpace );
         return (T) this;
+    }
+
+    public Boolean getReserveSpace()
+    {
+        return getBoolean( RESERVE_SPACE_KEY );
     }
 
     /**
@@ -201,8 +326,13 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
      */
     public T setTicks( double ticks )
     {
-        put( "ticks", new Double( ticks ) );
+        put( TICKS_KEY, new Double( ticks ) );
         return (T) this;
+    }
+
+    public Double getTicksDouble()
+    {
+        return getDouble( TICKS_KEY );
     }
 
     /**
@@ -210,8 +340,23 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
      */
     public T setTicks( Tick[] ticks )
     {
-        put( "ticks", JSONHelper.wrapArray( ticks ) );
+        put( TICKS_KEY, JSONHelper.wrapArray( ticks ) );
         return (T) this;
+    }
+
+    public Tick[] getTicksArray()
+    {
+        JSONArray array = getArray( TICKS_KEY );
+        if ( null == array )
+        {
+            return null;
+        }
+        Tick[] ticks = new Tick[array.size()];
+        for ( int i = 0; i < array.size(); i++ )
+        {
+            ticks[i] = new Tick( array.get( i ).isArray() );
+        }
+        return ticks;
     }
 
     /**
@@ -227,17 +372,16 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
 
     private static native void setTickGeneratorNative( JavaScriptObject axisOptions, TickGenerator generator )
     /*-{
-        axisOptions.ticks = function(axis)
-        {
-            var jsonAxisObject = @com.google.gwt.json.client.JSONObject::new(Lcom/google/gwt/core/client/JavaScriptObject;)(axis);
-            var javaAxisObject = @ca.nanometrics.gflot.client.Axis::new(Lcom/google/gwt/json/client/JSONObject;)(jsonAxisObject);
+		axisOptions.ticks = function(axis) {
+			var jsonAxisObject = @com.google.gwt.json.client.JSONObject::new(Lcom/google/gwt/core/client/JavaScriptObject;)(axis);
+			var javaAxisObject = @ca.nanometrics.gflot.client.Axis::new(Lcom/google/gwt/json/client/JSONObject;)(jsonAxisObject);
 
-            var generated = generator.@ca.nanometrics.gflot.client.options.AbstractAxisOptions.TickGenerator::generate(Lca/nanometrics/gflot/client/Axis;)(javaAxisObject);
+			var generated = generator.@ca.nanometrics.gflot.client.options.AbstractAxisOptions.TickGenerator::generate(Lca/nanometrics/gflot/client/Axis;)(javaAxisObject);
 
-            var jsonArrayWrapper = @ca.nanometrics.gflot.client.util.JSONHelper::wrapArray([Lca/nanometrics/gflot/client/util/JSONWrapper;)(generated);
-            var jsonArray = @ca.nanometrics.gflot.client.util.JSONHelper::getJSONArray(Lca/nanometrics/gflot/client/util/JSONArrayWrapper;)(jsonArrayWrapper);
-            return jsonArray.@com.google.gwt.json.client.JSONArray::getJavaScriptObject()();
-        };
+			var jsonArrayWrapper = @ca.nanometrics.gflot.client.util.JSONHelper::wrapArray([Lca/nanometrics/gflot/client/util/JSONWrapper;)(generated);
+			var jsonArray = @ca.nanometrics.gflot.client.util.JSONHelper::getJSONArray(Lca/nanometrics/gflot/client/util/JSONArrayWrapper;)(jsonArrayWrapper);
+			return jsonArray.@com.google.gwt.json.client.JSONArray::getJavaScriptObject()();
+		};
     }-*/;
 
     /**
@@ -251,12 +395,11 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
 
     private static native void setTickFormatterNative( JavaScriptObject axisOptions, TickFormatter tickFormatter )
     /*-{
-        axisOptions.tickFormatter = function(val, axis)
-        {
-            var jsonAxisObject = @com.google.gwt.json.client.JSONObject::new(Lcom/google/gwt/core/client/JavaScriptObject;)(axis);
-            var javaAxisObject = @ca.nanometrics.gflot.client.Axis::new(Lcom/google/gwt/json/client/JSONObject;)(jsonAxisObject);
-            return tickFormatter.@ca.nanometrics.gflot.client.options.TickFormatter::formatTickValue(DLca/nanometrics/gflot/client/Axis;)(val, javaAxisObject);
-        };
+		axisOptions.tickFormatter = function(val, axis) {
+			var jsonAxisObject = @com.google.gwt.json.client.JSONObject::new(Lcom/google/gwt/core/client/JavaScriptObject;)(axis);
+			var javaAxisObject = @ca.nanometrics.gflot.client.Axis::new(Lcom/google/gwt/json/client/JSONObject;)(jsonAxisObject);
+			return tickFormatter.@ca.nanometrics.gflot.client.options.TickFormatter::formatTickValue(DLca/nanometrics/gflot/client/Axis;)(val, javaAxisObject);
+		};
     }-*/;
 
     /**
@@ -266,8 +409,13 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
      */
     public T setTickLength( double tickLength )
     {
-        put( "tickLength", new Double( tickLength ) );
+        put( TICK_LENGTH_KEY, new Double( tickLength ) );
         return (T) this;
+    }
+
+    public Double getTickLength()
+    {
+        return getDouble( TICK_LENGTH_KEY );
     }
 
     /**
@@ -278,8 +426,13 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
      */
     public T setAlignTicksWithAxis( double alignTicksWithAxis )
     {
-        put( "alignTicksWithAxis", new Double( alignTicksWithAxis ) );
+        put( ALIGN_TICKS_KEY, new Double( alignTicksWithAxis ) );
         return (T) this;
+    }
+
+    public Double getAlignTicksWithAxis()
+    {
+        return getDouble( ALIGN_TICKS_KEY );
     }
 
 }

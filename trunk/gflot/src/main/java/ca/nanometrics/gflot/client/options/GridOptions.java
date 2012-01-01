@@ -76,7 +76,7 @@ public class GridOptions
         super();
     }
 
-    public GridOptions( JSONObject jsonObj )
+    GridOptions( JSONObject jsonObj )
     {
         super( jsonObj );
     }

@@ -97,7 +97,7 @@ public class LegendOptions
         super();
     }
 
-    public LegendOptions( JSONObject jsonObj )
+    LegendOptions( JSONObject jsonObj )
     {
         super( jsonObj );
     }

@@ -10,6 +10,7 @@ import ca.nanometrics.gflot.client.SeriesHandler;
 import ca.nanometrics.gflot.client.event.PlotHoverListener;
 import ca.nanometrics.gflot.client.event.SelectionListener;
 import ca.nanometrics.gflot.client.jsni.Plot;
+import ca.nanometrics.gflot.client.options.GlobalSeriesOptions;
 import ca.nanometrics.gflot.client.options.GridOptions;
 import ca.nanometrics.gflot.client.options.LegendOptions;
 import ca.nanometrics.gflot.client.options.LineSeriesOptions;
@@ -44,13 +45,13 @@ public class MarkingsExample
 
         PlotWithOverviewModel model = new PlotWithOverviewModel( PlotModelStrategy.defaultStrategy() );
         PlotOptions plotOptions = new PlotOptions();
-        plotOptions.setDefaultLineSeriesOptions( new LineSeriesOptions().setLineWidth( 1 ).setShow( true ) );
-        plotOptions.setDefaultPointsOptions( new PointsSeriesOptions().setRadius( 2 ).setShow( true ) );
-        plotOptions.setDefaultShadowSize( 1 );
+        plotOptions.setGlobalSeriesOptions( new GlobalSeriesOptions()
+        .setLineSeriesOptions( new LineSeriesOptions().setLineWidth( 1 ).setShow( true ) )
+        .setPointsOptions( new PointsSeriesOptions().setRadius( 2 ).setShow( true ) ).setShadowSize( 1d ) );
 
         plotOptions.setLegendOptions( new LegendOptions().setShow( false ) );
 
-        plotOptions.setSelectionOptions( new SelectionOptions().setDragging( true ).setMode( SelectionMode.X ) );
+        plotOptions.setSelectionOptions( new SelectionOptions().setMode( SelectionMode.X ) );
         final PlotWithOverview plot = new PlotWithOverview( model, plotOptions );
         // add hover listener
         plot.addHoverListener( new PlotHoverListener()

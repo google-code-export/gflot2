@@ -24,7 +24,7 @@ public class Marking
         super();
     }
 
-    public Marking( JSONObject jsonObj )
+    Marking( JSONObject jsonObj )
     {
         super( jsonObj );
     }

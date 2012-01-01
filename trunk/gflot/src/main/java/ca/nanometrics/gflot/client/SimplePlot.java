@@ -233,6 +233,11 @@ public class SimplePlot
         return plot.getPlotOffsetBottom();
     }
 
+    public PlotOptions getPlotOptions()
+    {
+        return options;
+    }
+
     /* ------------------ Widget API -- */
     protected void onLoad()
     {
@@ -257,6 +262,9 @@ public class SimplePlot
                     assert plot != null : "An javascript error occurrerd while creating plot.";
 
                     loaded = true;
+
+                    // retrieving the calculated options
+                    options = plot.getPlotOptions();
 
                     // commenting this line since it seems it is useless
                     // see http://code.google.com/p/gflot/issues/detail?id=27
