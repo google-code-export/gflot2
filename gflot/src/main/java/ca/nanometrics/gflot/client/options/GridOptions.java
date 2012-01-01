@@ -90,6 +90,9 @@ public class GridOptions
         return this;
     }
 
+    /**
+     * @return the color of the grid itself
+     */
     public String getColor()
     {
         return getString( COLOR_KEY );
@@ -113,6 +116,10 @@ public class GridOptions
         return this;
     }
 
+    /**
+     * @return the background color inside the grid area. The array can contains one color or two colors if it's a
+     * gradient
+     */
     public String[] getBackgroundColor()
     {
         JSONValue value = get( BACKGROUND_COLOR_KEY );
@@ -147,6 +154,9 @@ public class GridOptions
         return this;
     }
 
+    /**
+     * @return true if the grid is visible
+     */
     public Boolean getShow()
     {
         return getBoolean( SHOW_KEY );
@@ -161,7 +171,10 @@ public class GridOptions
         return this;
     }
 
-    public Boolean getAboveDate()
+    /**
+     * @return whether the grid is drawn above the data or below
+     */
+    public Boolean getAboveData()
     {
         return getBoolean( ABOVE_DATA_KEY );
     }
@@ -175,6 +188,9 @@ public class GridOptions
         return this;
     }
 
+    /**
+     * @return the space in pixels between tick labels and axis line
+     */
     public Integer getLabelMargin()
     {
         return getInteger( LABEL_MARGIN_KEY );
@@ -189,17 +205,26 @@ public class GridOptions
         return this;
     }
 
+    /**
+     * @return the space in pixels between axes when there are two next to each other
+     */
     public Integer getAxisMargin()
     {
         return getInteger( AXIS_MARGIN_KEY );
     }
 
+    /**
+     * Sets markings to the grid. It is used to draw simple lines and rectangular areas in the background of the plot.
+     */
     public GridOptions setMarkings( Markings markings )
     {
         put( MARKINGS_KEY, markings );
         return this;
     }
 
+    /**
+     * @return the markings
+     */
     public Markings getMarkings()
     {
         JSONArray array = getArray( MARKINGS_KEY );
@@ -213,23 +238,35 @@ public class GridOptions
         }
     }
 
+    /**
+     * Sets the colors of all markings. Specific color can be defined in Marking object
+     */
     public GridOptions setMarkingsColor( String color )
     {
         put( MARKINGS_COLOR_KEY, color );
         return this;
     }
 
+    /**
+     * @return the markings color
+     */
     public String getMarkingsColor()
     {
         return getString( MARKINGS_COLOR_KEY );
     }
 
+    /**
+     * Sets the line width of all markings. Specific line width can be defined in Marking object
+     */
     public GridOptions setMarkingsLineWidth( int lineWidth )
     {
         put( MARKINGS_LINE_WIDTH_KEY, lineWidth );
         return this;
     }
 
+    /**
+     * @return the markings line width
+     */
     public Integer getMarkingsLineWidth()
     {
         return getInteger( MARKINGS_LINE_WIDTH_KEY );
@@ -246,6 +283,9 @@ public class GridOptions
         return this;
     }
 
+    /**
+     * @return the width of the border around the plot
+     */
     public Integer getBorderWidth()
     {
         return getInteger( BORDER_WIDTH_KEY );
@@ -260,6 +300,9 @@ public class GridOptions
         return this;
     }
 
+    /**
+     * @return the color of the border
+     */
     public String getBorderColor()
     {
         return getString( BORDER_COLOR_KEY );
@@ -277,6 +320,9 @@ public class GridOptions
         return this;
     }
 
+    /**
+     * @return the default minimum margin around the border
+     */
     public Integer getMinBorderMargin()
     {
         return getInteger( MIN_BORDER_MARGIN_KEY );
@@ -292,6 +338,9 @@ public class GridOptions
         return this;
     }
 
+    /**
+     * @return true if the grid is clickable
+     */
     public Boolean getClickable()
     {
         return getBoolean( CLICKABLE_KEY );
@@ -307,6 +356,9 @@ public class GridOptions
         return this;
     }
 
+    /**
+     * @return true if the grid is hoverable
+     */
     public Boolean getHoverable()
     {
         return getBoolean( HOVERABLE_KEY );
@@ -321,6 +373,9 @@ public class GridOptions
         return this;
     }
 
+    /**
+     * @return true if nearby data items are highlighted automatically (default is true)
+     */
     public Boolean getAutoHighlight()
     {
         return getBoolean( AUTO_HIGHLIGHT_KEY );
@@ -337,6 +392,9 @@ public class GridOptions
         return this;
     }
 
+    /**
+     * @return the mouse active radius
+     */
     public Integer getMouseActiveRadius()
     {
         return getInteger( MOUSE_ACTIVE_RADIUS_KEY );

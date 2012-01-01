@@ -77,6 +77,9 @@ public class SelectionOptions
         super( jsonObj );
     }
 
+    /**
+     * Set the selection mode.
+     */
     public SelectionOptions setMode( SelectionMode mode )
     {
         assert null != mode : "mode can't be null";
@@ -85,17 +88,26 @@ public class SelectionOptions
         return this;
     }
 
+    /**
+     * @return the selection mode
+     */
     public SelectionMode getMode()
     {
         return SelectionMode.findByFlotValue( getString( MODE_KEY ) );
     }
 
+    /**
+     * Set the selection color
+     */
     public SelectionOptions setColor( String color )
     {
         put( COLOR_KEY, color );
         return this;
     }
 
+    /**
+     * @return the selection color
+     */
     public String getColor()
     {
         return getString( COLOR_KEY );

@@ -27,7 +27,10 @@ import ca.nanometrics.gflot.client.util.JSONObjectWrapper;
 
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.dom.client.Document;
+import com.google.gwt.json.client.JSONArray;
+import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
+import com.google.gwt.json.client.JSONValue;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
 
@@ -111,6 +114,9 @@ public class LegendOptions
         return this;
     }
 
+    /**
+     * @return true if the legend is shown
+     */
     public Boolean getShow()
     {
         return getBoolean( SHOW_KEY );
@@ -125,6 +131,9 @@ public class LegendOptions
         return this;
     }
 
+    /**
+     * @return the border color of the label box
+     */
     public String getLabelBoxBorderColor()
     {
         return getString( LABEL_BOX_BORDER_COLOR_KEY );
@@ -139,6 +148,9 @@ public class LegendOptions
         return this;
     }
 
+    /**
+     * @return the number of columns to divide the legend table into
+     */
     public Integer getNumOfColumns()
     {
         return getInteger( NUM_COLUMNS_KEY );
@@ -156,6 +168,9 @@ public class LegendOptions
         return this;
     }
 
+    /**
+     * @return the overall placement of the legend within the plot
+     */
     public LegendPosition getPosition()
     {
         return LegendPosition.findByFlotValue( getString( POSITION_KEY ) );
@@ -170,19 +185,37 @@ public class LegendOptions
         return this;
     }
 
-    public Double getMargin()
-    {
-        return getDouble( MARGIN_KEY );
-    }
-
     /**
      * Set the distance to the plot edge
      */
     public LegendOptions setMargin( double marginX, double marginY )
     {
-        // TODO get
         put( MARGIN_KEY, JSONHelper.wrapArray( new Double[] { marginX, marginY } ) );
         return this;
+    }
+
+    /**
+     * @return the distance to the plot edge. The array can contains one value if the margin is applied to both x and y
+     * axis or 2 values if the first one is applied to x axis and the second one to y axis.
+     */
+    public Double[] getMargin()
+    {
+        JSONValue value = get( MARGIN_KEY );
+        if ( value == null )
+        {
+            return null;
+        }
+        JSONNumber number = value.isNumber();
+        if ( null != number )
+        {
+            return new Double[] { number.doubleValue() };
+        }
+        JSONArray array = value.isArray();
+        if ( null != array )
+        {
+            return new Double[] { array.get( 0 ).isNumber().doubleValue(), array.get( 1 ).isNumber().doubleValue() };
+        }
+        return null;
     }
 
     /**
@@ -194,6 +227,9 @@ public class LegendOptions
         return this;
     }
 
+    /**
+     * @return the background color
+     */
     public String getBackgroundColor()
     {
         return getString( BACKGROUND_COLOR_KEY );
@@ -210,6 +246,9 @@ public class LegendOptions
         return this;
     }
 
+    /**
+     * @return the background opacity
+     */
     public Double getBackgroundOpacity()
     {
         return getDouble( BACKGROUND_OPACITY_KEY );

@@ -29,12 +29,18 @@ public class Marking
         super( jsonObj );
     }
 
+    /**
+     * Set the range for x axis
+     */
     public Marking setX( Range X )
     {
         put( X_AXIS_KEY, X );
         return this;
     }
 
+    /**
+     * @return the range for x axis
+     */
     public Range getX()
     {
         JSONObject obj = getObject( X_AXIS_KEY );
@@ -48,12 +54,18 @@ public class Marking
         }
     }
 
+    /**
+     * Set the range for y axis
+     */
     public Marking setY( Range Y )
     {
         put( Y_AXIS_KEY, Y );
         return this;
     }
 
+    /**
+     * @return the range for y axis
+     */
     public Range getY()
     {
         JSONObject obj = getObject( Y_AXIS_KEY );
@@ -67,23 +79,35 @@ public class Marking
         }
     }
 
+    /**
+     * Set the marking color
+     */
     public Marking setColor( String color )
     {
         put( COLOR_KEY, color );
         return this;
     }
 
+    /**
+     * @return the marking color
+     */
     public String getColor()
     {
         return getString( COLOR_KEY );
     }
 
+    /**
+     * Set the line width
+     */
     public Marking setLineWidth( int lineWidth )
     {
         put( LINE_WIDTH_KEY, lineWidth );
         return this;
     }
 
+    /**
+     * @return the line width
+     */
     public Integer getLineWidth()
     {
         return getInteger( LINE_WIDTH_KEY );

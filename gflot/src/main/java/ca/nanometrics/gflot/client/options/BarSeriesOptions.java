@@ -88,6 +88,9 @@ public class BarSeriesOptions
         return this;
     }
 
+    /**
+     * @return the width of the bars in units of the x axis (or the y axis if "horizontal" is true)
+     */
     public Double getBarWidth()
     {
         return getDouble( BAR_WIDTH_KEY );
@@ -104,6 +107,9 @@ public class BarSeriesOptions
         return this;
     }
 
+    /**
+     * @return the bar alignment
+     */
     public BarAlignment getAlignment()
     {
         return BarAlignment.findByFlotValue( getString( ALIGN_KEY ) );
@@ -120,6 +126,9 @@ public class BarSeriesOptions
         return this;
     }
 
+    /**
+     * @return true if the bars are drawn horizontally
+     */
     public Boolean getHorizontal()
     {
         return getBoolean( HORIZONTAL_KEY );

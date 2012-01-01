@@ -52,6 +52,10 @@ public class LineSeriesOptions
         return this;
     }
 
+    /**
+     * @return true if two adjacent data points are connected with a straight (possibly diagonal) line or with first a
+     * horizontal and then a vertical line
+     */
     public Boolean getSteps()
     {
         return getBoolean( STEPS_KEY );

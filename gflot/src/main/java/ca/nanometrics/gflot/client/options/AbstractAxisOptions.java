@@ -127,6 +127,9 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
         return (T) this;
     }
 
+    /**
+     * @return the visibility of the axis
+     */
     public Boolean getShow()
     {
         return getBoolean( SHOW_KEY );
@@ -144,6 +147,9 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
         return (T) this;
     }
 
+    /**
+     * @return the overall placement of the legend within the plot
+     */
     public AxisPosition getPosition()
     {
         return AxisPosition.findByFlotValue( getString( POSITION_KEY ) );
@@ -160,6 +166,9 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
         return (T) this;
     }
 
+    /**
+     * @return the color of the labels and ticks for the axis
+     */
     public String getColor()
     {
         return getString( COLOR_KEY );
@@ -174,6 +183,9 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
         return (T) this;
     }
 
+    /**
+     * @return the color of the ticks
+     */
     public String getTickColor()
     {
         return getString( TICK_COLOR_KEY );
@@ -190,6 +202,9 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
         return (T) this;
     }
 
+    /**
+     * @return the precise minimum value on the scale
+     */
     public Double getMinimum()
     {
         return getDouble( MIN_KEY );
@@ -206,6 +221,9 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
         return (T) this;
     }
 
+    /**
+     * @return the precise maximum value on the scale
+     */
     public Double getMaximum()
     {
         return getDouble( MAX_KEY );
@@ -224,6 +242,13 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
         return (T) this;
     }
 
+    /**
+     * @return the autoscaleMargin. The "autoscaleMargin" is a bit esoteric: it's the fraction of margin that the
+     * scaling algorithm will add to avoid that the outermost points ends up on the grid border. Note that this margin
+     * is only applied when a min or max value is not explicitly set. If a margin is specified, the plot will
+     * furthermore extend the axis end-point to the nearest whole tick. The default value is "null" for the x axes and
+     * 0.02 for y axes which seems appropriate for most cases.
+     */
     public Double getAutoscaleMargin()
     {
         return getDouble( AUTOSCALE_MARGIN_KEY );
@@ -284,6 +309,9 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
         return (T) this;
     }
 
+    /**
+     * @return the width on the tick label in pixels
+     */
     public Double getLabelWidth()
     {
         return getDouble( LABEL_WIDTH_KEY );
@@ -298,6 +326,9 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
         return (T) this;
     }
 
+    /**
+     * @return the height on the tick label in pixels
+     */
     public Double getLabelHeight()
     {
         return getDouble( LABEL_HEIGHT_KEY );
@@ -313,6 +344,9 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
         return (T) this;
     }
 
+    /**
+     * @return true if Flot should reserve space for axis even if it's not shown
+     */
     public Boolean getReserveSpace()
     {
         return getBoolean( RESERVE_SPACE_KEY );
@@ -330,6 +364,9 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
         return (T) this;
     }
 
+    /**
+     * @return the number of ticks the tick generator algorithm aims for
+     */
     public Double getTicksDouble()
     {
         return getDouble( TICKS_KEY );
@@ -344,6 +381,9 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
         return (T) this;
     }
 
+    /**
+     * @return the ticks
+     */
     public Tick[] getTicksArray()
     {
         JSONArray array = getArray( TICKS_KEY );
@@ -413,6 +453,9 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
         return (T) this;
     }
 
+    /**
+     * @return the length of the tick lines in pixels.
+     */
     public Double getTickLength()
     {
         return getDouble( TICK_LENGTH_KEY );
@@ -424,15 +467,18 @@ public abstract class AbstractAxisOptions<T extends AbstractAxisOptions<?>>
      * e.g. if you have one y axis to the left and one to the right, because the grid lines will then match the ticks in
      * both ends. The trade-off is that the forced ticks won't necessarily be at natural places.
      */
-    public T setAlignTicksWithAxis( double alignTicksWithAxis )
+    public T setAlignTicksWithAxis( int axisNumber )
     {
-        put( ALIGN_TICKS_KEY, new Double( alignTicksWithAxis ) );
+        put( ALIGN_TICKS_KEY, axisNumber );
         return (T) this;
     }
 
-    public Double getAlignTicksWithAxis()
+    /**
+     * @return the number of the axis aligned with this one
+     */
+    public Integer getAlignTicksWithAxis()
     {
-        return getDouble( ALIGN_TICKS_KEY );
+        return getInteger( ALIGN_TICKS_KEY );
     }
 
 }

@@ -109,11 +109,17 @@ public class PlotOptions
         return this;
     }
 
+    /**
+     * @return the legend options
+     */
     public LegendOptions getLegendOptions()
     {
         return legendOptions;
     }
 
+    /**
+     * Set the options for x axis
+     */
     public PlotOptions setXAxisOptions( AbstractAxisOptions<?> xAxisOptions )
     {
         this.xAxisOptions = xAxisOptions;
@@ -121,11 +127,17 @@ public class PlotOptions
         return this;
     }
 
+    /**
+     * @return the options for x axis
+     */
     public AbstractAxisOptions<?> getXAxisOptions()
     {
         return xAxisOptions;
     }
 
+    /**
+     * Set the options for y axis
+     */
     public PlotOptions setYAxisOptions( AbstractAxisOptions<?> yAxisOptions )
     {
         this.yAxisOptions = yAxisOptions;
@@ -133,11 +145,17 @@ public class PlotOptions
         return this;
     }
 
+    /**
+     * @return the options for y axis
+     */
     public AbstractAxisOptions<?> getyAxisOptions()
     {
         return yAxisOptions;
     }
 
+    /**
+     * Set the selection options
+     */
     public PlotOptions setSelectionOptions( SelectionOptions selectionOptions )
     {
         this.selectionOptions = selectionOptions;
@@ -145,11 +163,17 @@ public class PlotOptions
         return this;
     }
 
+    /**
+     * @return the selection options
+     */
     public SelectionOptions getSelectionOptions()
     {
         return selectionOptions;
     }
 
+    /**
+     * Set the grid options
+     */
     public PlotOptions setGridOptions( GridOptions gridOptions )
     {
         this.gridOptions = gridOptions;
@@ -157,11 +181,17 @@ public class PlotOptions
         return this;
     }
 
+    /**
+     * @return the grid options
+     */
     public GridOptions getGridOptions()
     {
         return gridOptions;
     }
 
+    /**
+     * Set the global series options
+     */
     public PlotOptions setGlobalSeriesOptions( GlobalSeriesOptions globalSeriesOptions )
     {
         this.globalSeriesOptions = globalSeriesOptions;
@@ -169,6 +199,9 @@ public class PlotOptions
         return this;
     }
 
+    /**
+     * @return the global series options
+     */
     public GlobalSeriesOptions getGlobalSeriesOptions()
     {
         return globalSeriesOptions;
