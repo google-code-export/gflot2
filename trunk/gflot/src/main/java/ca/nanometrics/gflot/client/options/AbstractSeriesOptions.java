@@ -21,11 +21,8 @@
  */
 package ca.nanometrics.gflot.client.options;
 
-import ca.nanometrics.gflot.client.util.JSONHelper;
 import ca.nanometrics.gflot.client.util.JSONObjectWrapper;
-import ca.nanometrics.gflot.client.util.JSONWrapper;
 
-import com.google.gwt.json.client.JSONNumber;
 import com.google.gwt.json.client.JSONObject;
 
 /**
@@ -43,12 +40,6 @@ public abstract class AbstractSeriesOptions<T extends AbstractSeriesOptions<?>>
     protected static final String FILL_KEY = "fill";
 
     protected static final String FILL_COLOR_KEY = "fillColor";
-
-    protected static final String FILL_COLOR_COLORS_KEY = "colors";
-
-    protected static final String OPACITY_KEY = "opacity";
-
-    protected static final String BRIGHTNESS_KEY = "brightness";
 
     public AbstractSeriesOptions()
     {
@@ -69,6 +60,9 @@ public abstract class AbstractSeriesOptions<T extends AbstractSeriesOptions<?>>
         return (T) this;
     }
 
+    /**
+     * @return the visibility of the series
+     */
     public Boolean getShow()
     {
         return getBoolean( SHOW_KEY );
@@ -84,6 +78,9 @@ public abstract class AbstractSeriesOptions<T extends AbstractSeriesOptions<?>>
         return (T) this;
     }
 
+    /**
+     * @return the thickness of the line or outline in pixels
+     */
     public Double getLineWidth()
     {
         return getDouble( LINE_WIDTH_KEY );
@@ -99,15 +96,16 @@ public abstract class AbstractSeriesOptions<T extends AbstractSeriesOptions<?>>
         return (T) this;
     }
 
+    /**
+     * @return true if the shape is filled
+     */
     public Boolean getFillBoolean()
     {
         return getBoolean( FILL_KEY );
     }
 
     /**
-     * Set if the shape should be filled. For lines, this produces area graphs. You can use setFillColor to specify the
-     * color of the fill. You can adjust the opacity of the fill by setting fill to a number between 0 (fully
-     * transparent) and 1 (fully opaque).
+     * Set the opacity of the fill by setting fill to a number between 0 (fully transparent) and 1 (fully opaque).
      */
     public T setFill( double opacity )
     {
@@ -117,6 +115,9 @@ public abstract class AbstractSeriesOptions<T extends AbstractSeriesOptions<?>>
         return (T) this;
     }
 
+    /**
+     * @return the opacity of the fill
+     */
     public Double getFillOpacity()
     {
         return getDouble( FILL_KEY );
@@ -132,14 +133,16 @@ public abstract class AbstractSeriesOptions<T extends AbstractSeriesOptions<?>>
         return (T) this;
     }
 
+    /**
+     * @return the color to fill
+     */
     public String getFillColor()
     {
         return getString( FILL_COLOR_KEY );
     }
 
     /**
-     * Set the color to fill. If "fillColor" evaluates to false (default for everything except points which are filled
-     * with white), the fill color is auto-set to the color of the data series.
+     * Set the scaling of the brightness and the opacity of the series fill color
      */
     public T setFillColor( Double fromOpacity, Double fromBrightness, Double toOpacity, Double toBrightness )
     {
@@ -149,31 +152,24 @@ public abstract class AbstractSeriesOptions<T extends AbstractSeriesOptions<?>>
         assert null == toOpacity || toOpacity >= 0 && toOpacity <= 1 : "toOpacity range from 0.0 to 1.0";
         assert null == toBrightness || toBrightness >= 0 && toBrightness <= 1 : "toBrightness range from 0.0 to 1.0";
 
-        put(
-            FILL_COLOR_KEY,
-            JSONHelper.wrapArrayIntoObject( FILL_COLOR_COLORS_KEY, new JSONWrapper[] { buildOpacityBrightnessObject( fromOpacity, fromBrightness ),
-                buildOpacityBrightnessObject( toOpacity, toBrightness ) } ) );
+        put( FILL_COLOR_KEY, new SeriesGradient( fromOpacity, fromBrightness, toOpacity, toBrightness ) );
 
         return (T) this;
     }
 
-    private JSONObjectWrapper buildOpacityBrightnessObject( Double opacity, Double brightness )
+    /**
+     * @return the scaling of the brightness and the opacity of the series fill color
+     */
+    public SeriesGradient getFillColorGradient()
     {
-        JSONObject obj = new JSONObject();
-        if ( null != opacity )
+        JSONObject obj = getObject( FILL_COLOR_KEY );
+        if ( null == obj )
         {
-            obj.put( OPACITY_KEY, new JSONNumber( opacity ) );
+            return null;
         }
-        if ( null != brightness )
+        else
         {
-            obj.put( BRIGHTNESS_KEY, new JSONNumber( brightness ) );
+            return new SeriesGradient( obj );
         }
-        return JSONHelper.wrapObject( obj );
     }
-
-    // public String getFillColor()
-    // {
-    // TODO get method for the opacity and brightness
-    // return getString( FILL_COLOR_KEY );
-    // }
 }

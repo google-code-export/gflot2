@@ -49,6 +49,9 @@ public class GlobalSeriesOptions
         return this;
     }
 
+    /**
+     * @return global Line series options
+     */
     public LineSeriesOptions getLineSeriesOptions()
     {
         return lineSeriesOptions;
@@ -64,6 +67,9 @@ public class GlobalSeriesOptions
         return this;
     }
 
+    /**
+     * @return global Bar series options
+     */
     public BarSeriesOptions getBarSeriesOptions()
     {
         return barSeriesOptions;
@@ -79,6 +85,9 @@ public class GlobalSeriesOptions
         return this;
     }
 
+    /**
+     * @return global Points series options
+     */
     public PointsSeriesOptions getPointsSeriesOptions()
     {
         return pointsSeriesOptions;
@@ -95,6 +104,9 @@ public class GlobalSeriesOptions
         return this;
     }
 
+    /**
+     * @return the size of shadows in pixels
+     */
     public Double getShadowSize()
     {
         return getDouble( SHADOW_SIZE_KEY );

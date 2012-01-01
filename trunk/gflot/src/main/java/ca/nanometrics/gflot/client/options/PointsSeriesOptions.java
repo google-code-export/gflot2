@@ -84,6 +84,9 @@ public class PointsSeriesOptions
         return this;
     }
 
+    /**
+     * @return the radius of the symbol
+     */
     public Double getRadius()
     {
         return getDouble( RADIUS_KEY );
@@ -100,6 +103,9 @@ public class PointsSeriesOptions
         return this;
     }
 
+    /**
+     * @return the symbol to represents the points
+     */
     public PointSymbol getSymbol()
     {
         return PointSymbol.findByFlotValue( getString( SYMBOL_KEY ) );

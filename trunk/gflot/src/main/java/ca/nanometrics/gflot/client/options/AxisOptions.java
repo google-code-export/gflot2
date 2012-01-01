@@ -51,6 +51,9 @@ public class AxisOptions
         return this;
     }
 
+    /**
+     * @return the tick interval size
+     */
     public Double getTickSize()
     {
         return getDouble( TICK_SIZE_KEY );
@@ -65,6 +68,9 @@ public class AxisOptions
         return this;
     }
 
+    /**
+     * @return the minimal tick size
+     */
     public Double getMinTickSize()
     {
         return getDouble( MIN_TICK_SIZE_KEY );
@@ -79,6 +85,9 @@ public class AxisOptions
         return this;
     }
 
+    /**
+     * @return the number of decimals to display
+     */
     public Double getTickDecimals()
     {
         return getDouble( TICK_DECIMALS_KEY );
