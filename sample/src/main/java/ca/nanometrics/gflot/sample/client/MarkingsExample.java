@@ -19,8 +19,6 @@ import ca.nanometrics.gflot.client.options.Markings;
 import ca.nanometrics.gflot.client.options.PlotOptions;
 import ca.nanometrics.gflot.client.options.PointsSeriesOptions;
 import ca.nanometrics.gflot.client.options.Range;
-import ca.nanometrics.gflot.client.options.SelectionOptions;
-import ca.nanometrics.gflot.client.options.SelectionOptions.SelectionMode;
 
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
@@ -47,11 +45,9 @@ public class MarkingsExample
         PlotOptions plotOptions = new PlotOptions();
         plotOptions.setGlobalSeriesOptions( new GlobalSeriesOptions()
         .setLineSeriesOptions( new LineSeriesOptions().setLineWidth( 1 ).setShow( true ) )
-        .setPointsOptions( new PointsSeriesOptions().setRadius( 2 ).setShow( true ) ).setShadowSize( 1d ) );
-
+        .setPointsOptions( new PointsSeriesOptions().setRadius( 2 ).setShow( true ) ).setShadowSize( 1 ) );
         plotOptions.setLegendOptions( new LegendOptions().setShow( false ) );
 
-        plotOptions.setSelectionOptions( new SelectionOptions().setMode( SelectionMode.X ) );
         final PlotWithOverview plot = new PlotWithOverview( model, plotOptions );
         // add hover listener
         plot.addHoverListener( new PlotHoverListener()
