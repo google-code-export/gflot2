@@ -1,5 +1,8 @@
 #summary release notes
 
+= Version 2.2.1 =
+  * Just forgot to add getter for options on PlotWithOverview
+
 = Version 2.2 =
 
   * fixed the method setContainer on LegendOptions (r58)
