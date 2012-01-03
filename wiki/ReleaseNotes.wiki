@@ -1,5 +1,11 @@
 #summary release notes
 
+= Version 2.2.2 =
+  * fix two bugs on PlotWithOverview : 
+    * the method clear() on PlotWithOverviewSeriesHandler was not resetting all the attributes (r75)
+    * redraw was called for each series (r76)
+  * add support for flot image plugin (r74)
+
 = Version 2.2.1 =
   * Just forgot to add getter for options on PlotWithOverview
 
