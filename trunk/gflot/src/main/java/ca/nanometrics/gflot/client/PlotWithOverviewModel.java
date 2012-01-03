@@ -123,6 +123,9 @@ public class PlotWithOverviewModel extends PlotModel {
 			super.clear();
 			m_windowHandler.clear();
 			m_overviewHandler.clear();
+			m_lastDataPoint = null;
+			m_firstDataPoint = null;
+			m_lockSelection = false;
 		}
 
 		@Override
