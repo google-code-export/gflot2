@@ -39,3 +39,5 @@ To use it, add ImageDataPoint instead of DataPoint to the model. The first param
 You also have to set the image "show" option to true on the global series options or directly on the series options.
 
 Finally, call the method {{{plot.setLoadDataImages( true );}}} on your SimplePlot. It will load the images before creating the plot.
+
+The flot plugin has been modified to prevent NullPointerException when the loadDataImages function is called and no images option have been set. If you use the automatic injection, it is transparent. If not, you can download the modified scripts in the download pages. The plugin is still usable without the modification but you have the image options on global series options and specific series options.
