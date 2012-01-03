@@ -27,4 +27,15 @@ The flot version actually used is 0.7 and the javascript files are :
   * jquery.flot.min.js (required)
   * jquery.flot.selection.min.js (only for selection)
   * jquery.flot.symbol.min.js (only for additional symbol on PointsSeriesOptions)
+  * jquery.flot.image.min.js (only for image plugin)
   * excanvas.min.js (only for IE <= 8)
+
+= Flot Image plugin =
+
+Since version 2.2.2, gflot partially supports the image plugin. 
+
+To use it, add ImageDataPoint instead of DataPoint to the model. The first parameter is the url of the image.
+
+You also have to set the image "show" option to true on the global series options or directly on the series options.
+
+Finally, call the method {{{plot.setLoadDataImages( true );}}} on your SimplePlot. It will load the images before creating the plot.
