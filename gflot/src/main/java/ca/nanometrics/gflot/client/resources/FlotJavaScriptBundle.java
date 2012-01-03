@@ -18,9 +18,6 @@ public interface FlotJavaScriptBundle
     @Source( "jquery.flot.symbol.min.js" )
     TextResource flotSymbol();
 
-    @Source( "jquery.flot.image.min.modified.js" )
-    TextResource flotImage();
-
     @Source( "excanvas.min.js" )
     TextResource excanvas();
 }

@@ -27,7 +27,7 @@ import com.google.gwt.json.client.JSONObject;
  * @author AlexanderDeleon
  */
 public class BarSeriesOptions
-    extends AbstractBasicSeriesOptions<BarSeriesOptions>
+    extends AbstractSeriesOptions<BarSeriesOptions>
 {
     public enum BarAlignment
     {

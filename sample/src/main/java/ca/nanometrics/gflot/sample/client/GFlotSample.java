@@ -37,7 +37,6 @@ public class GFlotSample
         addExample( new SlidingWindowExample() );
         addExample( new DecimationExample() );
         addExample( new MarkingsExample() );
-        addExample( new ImageExample() );
     }
 
     private void addExample( GFlotExample example )

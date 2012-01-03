@@ -27,7 +27,7 @@ import com.google.gwt.json.client.JSONObject;
  * @author AlexanderDeleon
  */
 public class PointsSeriesOptions
-    extends AbstractBasicSeriesOptions<PointsSeriesOptions>
+    extends AbstractSeriesOptions<PointsSeriesOptions>
 {
     public enum PointSymbol
     {

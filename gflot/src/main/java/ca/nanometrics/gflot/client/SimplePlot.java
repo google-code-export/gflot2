@@ -24,7 +24,6 @@ package ca.nanometrics.gflot.client;
 import java.util.ArrayList;
 import java.util.List;
 
-import ca.nanometrics.gflot.client.event.LoadImagesCallback;
 import ca.nanometrics.gflot.client.event.PlotClickListener;
 import ca.nanometrics.gflot.client.event.PlotHoverListener;
 import ca.nanometrics.gflot.client.event.SelectionListener;
@@ -33,7 +32,6 @@ import ca.nanometrics.gflot.client.options.PlotOptions;
 import ca.nanometrics.gflot.client.resources.FlotJavaScriptLoader;
 import ca.nanometrics.gflot.client.resources.FlotJavaScriptLoader.FlotJavaScriptCallback;
 
-import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.DOM;
 import com.google.gwt.user.client.Element;
@@ -60,8 +58,6 @@ public class SimplePlot
     private Plot plot;
 
     private boolean loaded;
-
-    private boolean loadDataImages;
 
     private PlotOptions options;
 
@@ -242,11 +238,6 @@ public class SimplePlot
         return options;
     }
 
-    public void setLoadDataImages( boolean loadDataImages )
-    {
-        this.loadDataImages = loadDataImages;
-    }
-
     /* ------------------ Widget API -- */
     protected void onLoad()
     {
@@ -258,23 +249,31 @@ public class SimplePlot
                 @Override
                 public void onSuccess()
                 {
-                    if ( loadDataImages )
+                    if ( options == null )
                     {
-                        Plot.loadDataImages( model.getSeries(), options, new LoadImagesCallback()
-                        {
-                            @Override
-                            public void onImagesLoaded( JavaScriptObject data, JavaScriptObject options )
-                            {
-                                plot = Plot.create( getElement(), data, options );
-                                onPlotCreated();
-                            }
-                        } );
+                        plot = Plot.create( getElement(), model.getSeries() );
                     }
                     else
                     {
                         plot = Plot.create( getElement(), model.getSeries(), options );
-                        onPlotCreated();
                     }
+
+                    // Issue : 2
+                    assert plot != null : "An javascript error occurrerd while creating plot.";
+
+                    loaded = true;
+
+                    // retrieving the calculated options
+                    options = plot.getPlotOptions();
+
+                    // commenting this line since it seems it is useless
+                    // see http://code.google.com/p/gflot/issues/detail?id=27
+                    // redraw();
+                    for ( Command cmd : onLoadOperations )
+                    {
+                        cmd.execute();
+                    }
+                    onLoadOperations.clear();
                 }
 
                 @Override
@@ -284,23 +283,6 @@ public class SimplePlot
                 }
             } );
         }
-    }
-
-    private void onPlotCreated()
-    {
-        // Issue : 2
-        assert plot != null : "A javascript error occurred while creating plot.";
-
-        loaded = true;
-
-        // retrieving the calculated options
-        options = plot.getPlotOptions();
-
-        for ( Command cmd : onLoadOperations )
-        {
-            cmd.execute();
-        }
-        onLoadOperations.clear();
     }
 
     /* ------------------ Helper methods -- */
