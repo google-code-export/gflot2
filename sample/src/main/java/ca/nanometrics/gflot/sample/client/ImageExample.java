@@ -32,7 +32,7 @@ public class ImageExample
 
         // create a series
         SeriesHandler handlerImage = model.addSeries( "Image series" );
-        handlerImage.getSeries().setSeriesOptions( SeriesType.IMAGE, new ImageSeriesOptions().setShow( true ) );
+        handlerImage.getSeries().setSeriesOptions( SeriesType.IMAGE, new ImageSeriesOptions().setShow( true ).setAlpha(0.5) );
         handlerImage.add( new ImageDataPoint( "images/hs-2004-27-a-large_web.jpg", -2, -2, 2, 2 ) );
 
         // create a series
